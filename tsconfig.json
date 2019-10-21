@@ -18,6 +18,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ng-mat-forms": [
+        "dist/ng-mat-forms"
+      ],
+      "ng-mat-forms/*": [
+        "dist/ng-mat-forms/*"
+      ]
+    }
   }
 }

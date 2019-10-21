@@ -46,6 +46,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -106,6 +107,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -137,6 +139,42 @@
           }
         }
       }
-    }},
+    },
+    "ng-mat-forms": {
+      "projectType": "library",
+      "root": "projects/ng-mat-forms",
+      "sourceRoot": "projects/ng-mat-forms/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ng-mat-forms/tsconfig.lib.json",
+            "project": "projects/ng-mat-forms/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-mat-forms/src/test.ts",
+            "tsConfig": "projects/ng-mat-forms/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-mat-forms/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-mat-forms/tsconfig.lib.json",
+              "projects/ng-mat-forms/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
   "defaultProject": "forms"
 }

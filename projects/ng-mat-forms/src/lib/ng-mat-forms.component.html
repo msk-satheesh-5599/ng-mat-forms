@@ -1,0 +1,38 @@
+<ng-container *ngIf="Fields.length > 0; then thenTemplate; else elseTemplate"></ng-container>
+<ng-template #thenTemplate>
+    <mat-grid-list responsive='true' [cols]="breakpoint" rowHeight="100px" (window:resize)="onResize($event)">
+        <form [formGroup]='FormGen'>
+            <mat-grid-tile *ngFor='let x of Fields;trackBy:trackByFormControlName;'>
+                <div *ngIf='x.type===inputType.Input'>
+                    <mat-form-field>
+                        <input matInput [placeholder]="x.label" [formControlName]='x.formControlName'
+                            (change)='valueChange(x.formControlName)' [numbersOnly]='x.numeric' [alphabetOnly]='x.alpha'
+                            [alphanumericOnly]='x.alphanumeric' [customRegex]='x.custom' [regExp]='x.reGex'>
+                    </mat-form-field>
+                </div>
+                <div *ngIf='x.type===inputType.Select'>
+                    <mat-form-field>
+                        <mat-label>{{ x.label }}</mat-label>
+                        <mat-select [formControlName]='x.formControlName'>
+                            <mat-option *ngFor="let food of x.list" [value]="food.value">
+                                {{food.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div *ngIf='x.type===inputType.Radio'>
+                    <mat-radio-group aria-label="x.label">
+                        <mat-radio-button *ngFor="let item of x.list" value='item.value'>{{ item.name }}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </mat-grid-tile>
+        </form>
+    </mat-grid-list>
+    <div style='margin-left: 80vw;'>
+        <button mat-raised-button (click)='submit()'>Submit</button>
+    </div>
+</ng-template>
+<ng-template #elseTemplate>
+    <div>No Fields Are There</div>
+</ng-template>
