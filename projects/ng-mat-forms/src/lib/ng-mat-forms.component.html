@@ -3,14 +3,16 @@
     <mat-grid-list responsive='true' [cols]="breakpoint" rowHeight="100px" (window:resize)="onResize($event)">
         <form [formGroup]='FormGen'>
             <mat-grid-tile *ngFor='let x of Fields;trackBy:trackByFormControlName;'>
-                <div *ngIf='x.type===inputType.Input'>
+                <div *ngIf='x.input'>
                     <mat-form-field>
-                        <input matInput [placeholder]="x.label" [formControlName]='x.formControlName'
+                        <mat-label>{{ x.label }}</mat-label>
+                        <input matInput [placeholder]="x.placeholder" [formControlName]='x.formControlName'
                             (change)='valueChange(x.formControlName)' [numbersOnly]='x.numeric' [alphabetOnly]='x.alpha'
                             [alphanumericOnly]='x.alphanumeric' [customRegex]='x.custom' [regExp]='x.reGex'>
+                        <mat-error *ngIf='FormGen.get(x.formControlName).invalid'>{{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
                     </mat-form-field>
                 </div>
-                <div *ngIf='x.type===inputType.Select'>
+                <div *ngIf='x.select'>
                     <mat-form-field>
                         <mat-label>{{ x.label }}</mat-label>
                         <mat-select [formControlName]='x.formControlName'>
@@ -18,13 +20,15 @@
                                 {{food.name}}
                             </mat-option>
                         </mat-select>
+                        <mat-error *ngIf='FormGen.get(x.formControlName).invalid'>{{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
                     </mat-form-field>
                 </div>
-                <div *ngIf='x.type===inputType.Radio'>
+                <div *ngIf='x.radio'>
                     <mat-radio-group aria-label="x.label">
                         <mat-radio-button *ngFor="let item of x.list" value='item.value'>{{ item.name }}
                         </mat-radio-button>
                     </mat-radio-group>
+                    <mat-error *ngIf='FormGen.get(x.formControlName).invalid'>{{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
                 </div>
             </mat-grid-tile>
         </form>

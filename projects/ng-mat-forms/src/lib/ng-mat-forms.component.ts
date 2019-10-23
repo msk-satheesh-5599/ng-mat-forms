@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-
-export interface FieldContents {
+export interface Fields {
     type: type;
     label: string;
     placeholder: string;
@@ -10,24 +9,15 @@ export interface FieldContents {
     directive?: directive;
     regex?: RegExp;
     defaultValue?: string;
-    validators?: Array<any>;
-    list?: Array<Object>;
+    validators?: Array<Validators>;
+    list?: Array<SelectList>;
 }
 
-export interface Fields extends Array<FieldContents> { }
+export interface SelectList { name: string; value: string; }
 
-export enum directive {
-    Alpha,
-    AlphaNumeric,
-    Numeric,
-    Custom
-}
+export enum directive { Alpha, AlphaNumeric, Numeric, Custom }
 
-export enum type {
-    Input,
-    Select,
-    Radio
-}
+export enum type { Input, Select, Radio }
 
 
 @Component({
@@ -50,7 +40,8 @@ export class NgMatFormsComponent implements OnInit {
         setTimeout(() => {
             this.prepareDirective();
         }, 1000);
-        this.breakpoint = this.Column;
+        this.breakpoint = (window.innerWidth <= 400) ? 1 :
+            ((window.innerWidth <= 700) ? 2 : this.Column);
     }
 
     onResize(event) {
@@ -68,13 +59,14 @@ export class NgMatFormsComponent implements OnInit {
     createForm(): FormGroup {
         const job = new FormGroup({});
         this.Fields.map(x => {
-            const control: FormControl = new FormControl(x.defaultValue, x.validators);
+            let validators: any = x.validators;
+            const control: FormControl = new FormControl(x.defaultValue, validators);
             job.addControl(x.formControlName, control);
         });
         return job;
     }
 
-    valueChange(formControlName: any) {
+    valueChange(formControlName: string) {
         this.onChange.emit({ controlName: formControlName, value: this.FormGen.get(formControlName).value });
     }
 
@@ -82,10 +74,10 @@ export class NgMatFormsComponent implements OnInit {
         this.getFormValue.emit(this.FormGen.value);
     }
 
-    setValue(formControlName: String, value: any) {
+    setValue(formControlName: string, value: any) {
     }
 
-    trackByFormControlName(index: number, field: any): String {
+    trackByFormControlName(index: number, field: any): string {
         return field.formControlName;
     }
 
@@ -96,6 +88,7 @@ export class NgMatFormsComponent implements OnInit {
                 this.Fields[i]['input'] = (item.type === type.Input);
                 this.Fields[i]['select'] = (item.type === type.Select);
                 this.Fields[i]['radio'] = (item.type === type.Radio);
+                console.warn((item.directive === directive.Numeric));
                 this.Fields[i]['numeric'] = (item.directive === directive.Numeric);
                 this.Fields[i]['alphanumeric'] = (item.directive === directive.AlphaNumeric);
                 this.Fields[i]['custom'] = (item.directive === directive.Custom);
@@ -103,6 +96,26 @@ export class NgMatFormsComponent implements OnInit {
             });
         }
     }
+
+    getErrorMessage(control, fieldName) {
+        if (control.hasError) {
+            if (control.errors != null) {
+                let error = Object.keys(control.errors)[0];
+                return this.getErrorMessageField(error, control.errors[error], fieldName);
+            }
+            return '';
+        }
+    }
+
+    getErrorMessageField(errors: string, obj: any, fieldName: string) {
+        let config = {
+            required: `${fieldName} is required`,
+            minlength: `Minimun Length for ${fieldName} is ${obj.requiredLength}`
+        }
+        return config[errors];
+    }
 }
+
+
 
 

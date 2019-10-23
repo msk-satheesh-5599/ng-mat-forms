@@ -1,5 +1,6 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { NgMatFormsComponent, type, Fields, directive } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.component';
+import { type, Fields, directive } from 'ng-mat-forms';
+import { Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-root',
@@ -10,15 +11,17 @@ export class AppComponent {
 
     @ViewChild('temp', { read: false, static: false }) NgMatForm: NgMatFormsComponent;
 
+    constructor() {
 
-    constructor() { }
+    }
 
-    Fields: Fields = [{
+    Fields: Array<Fields> = [{
         type: type.Input,
         label: 'User Name',
         placeholder: 'Enter a User Name',
         formControlName: 'name',
-        directive: directive.AlphaNumeric
+        directive: directive.AlphaNumeric,
+        validators: [Validators.required, Validators.minLength(5)]
     }, {
         type: type.Input,
         label: 'Password',
@@ -27,11 +30,11 @@ export class AppComponent {
         list: [
             {
                 name: 'Satheesh',
-                value: 'Satheesh'
+                value: 'I Love You Pondati'
             },
             {
                 name: 'Bhuvi',
-                value: 'I Love You'
+                value: 'I Love You Mama'
             }
         ]
     }, {

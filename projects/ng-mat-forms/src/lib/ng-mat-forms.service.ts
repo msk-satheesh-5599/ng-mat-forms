@@ -52,7 +52,7 @@ export class AlphaNumericOnlyDirective {
     @HostListener('input', ['$event']) onInput(event) {
         if (this.alphanumericOnly) {
             const initalValue = this._el.nativeElement.value;
-            this._el.nativeElement.value = initalValue.replace(/[0-9a-zA-z]*/g, '');
+            this._el.nativeElement.value = initalValue.replace(/[^\w\s]/gi, '');
             if (initalValue !== this._el.nativeElement.value) {
                 event.stopPropagation();
             }
@@ -78,22 +78,3 @@ export class customDirective {
     }
 }
 
-declare global {
-    interface Array<T> {
-        makeDirective(): Array<any>;
-    }
-}
-
-Array.prototype.makeDirective = function () {
-    let target = this;
-    target.map((item, i) => {
-        target[i]['alpha'] = (item.directive == 'Alpha');
-        target[i]['numeric'] = (item.directive == 'Numeric');
-        target[i]['alphanumeric'] = (item.directive == 'AlphaNumeric');
-        target[i]['custom'] = (item.directive == 'Custom');
-        target[i]['reGex'] = (item.regex == '') ? '' : item.regex;
-    });
-    return target;
-};
-
-export { };
