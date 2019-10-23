@@ -1,4 +1,5 @@
-import { Injectable, Directive, Input, ElementRef, HostListener } from '@angular/core';
+import { Injectable, Directive, Input, ElementRef, HostListener, Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Injectable({
     providedIn: 'root',
@@ -76,5 +77,36 @@ export class customDirective {
             }
         }
     }
+}
+
+@Component({
+    selector: 'error-message',
+    template: ``,
+    styles: []
+})
+export class ErrorMessageComponent {
+
+    @Input() control: FormControl;
+    @Input() Field: string;
+    constructor() { }
+
+    getErrorMessage(control) {
+        if (control.hasError) {
+            if (control.errors != null) {
+                let error = Object.keys(control.errors)[0];
+                return this.getErrorMessageField(error, control.errors[error]);
+            }
+            return '';
+        }
+    }
+
+    getErrorMessageField(errors: string, obj: any) {
+        let config = {
+            required: `${this.Field} is required`,
+            minlength: `Minimun Length for ${this.Field} is ${obj.requiredLength}`
+        }
+        return config[errors];
+    }
+
 }
 
