@@ -81,8 +81,12 @@ export class customDirective {
 
 @Component({
     selector: 'error-message',
-    template: ``,
-    styles: []
+    template: `<p class='error' *ngIf='control.hasError'>{{getErrorMessages}}</p>`,
+    styles: [
+        `.error{
+            color: #f44336;
+        }`
+    ]
 })
 export class ErrorMessageComponent {
 
@@ -90,11 +94,11 @@ export class ErrorMessageComponent {
     @Input() Field: string;
     constructor() { }
 
-    getErrorMessage(control) {
-        if (control.hasError) {
-            if (control.errors != null) {
-                let error = Object.keys(control.errors)[0];
-                return this.getErrorMessageField(error, control.errors[error]);
+    getErrorMessage() {
+        if (this.control.hasError) {
+            if (this.control.errors != null) {
+                let error = Object.keys(this.control.errors)[0];
+                return this.getErrorMessageField(error, this.control.errors[error]);
             }
             return '';
         }
