@@ -14,7 +14,8 @@ import {
     MatGridListModule,
     MatButtonModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    MatCheckboxModule
 } from '@angular/material';
 import { CommonModule } from '@angular/common';
 
@@ -34,6 +35,7 @@ import { CommonModule } from '@angular/common';
         MatButtonModule,
         MatSelectModule,
         MatRadioModule,
+        MatCheckboxModule,
         ReactiveFormsModule
     ],
     providers: [NgMatFormsService],

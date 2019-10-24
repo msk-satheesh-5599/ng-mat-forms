@@ -2,28 +2,57 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export interface Fields {
-    type: type;
+    type: FieldType;
     label: string;
     placeholder: string;
     formControlName: string;
-    directive?: directive;
+    directive?: Directive;
     regex?: RegExp;
     defaultValue?: string;
     validators?: Array<Validators>;
     list?: Array<SelectList>;
 }
 
-export interface SelectList { name: string; value: string; }
+export interface SelectList {
+    name: string;
+    value: string;
+    formControlName?: string;
+}
 
-export enum directive { Alpha, AlphaNumeric, Numeric, Custom }
+export enum Directive {
+    Alpha = 'alpha',
+    AlphaNumeric = 'alphanumeric',
+    Numeric = 'numeric',
+    Custom = 'custom'
+}
 
-export enum type { Input, Select, Radio }
+export enum FieldType {
+    Input = 'input',
+    Select = 'select',
+    Radio = 'radio',
+    MultiSelect = 'multiSelect',
+    CheckBox = 'checkBox'
+}
 
 
 @Component({
     selector: 'ng-mat-forms',
     templateUrl: 'ng-mat-forms.component.html',
-    styles: []
+    styles: [`
+        .mat-radio-button ~ .mat-radio-button {
+            margin-left: 16px;
+        }
+        .example-section {
+            display: flex;
+            align-content: center;
+            align-items: center;
+            height: 60px;
+        }
+
+        .example-margin {
+            margin: 0 10px;
+        }
+    `]
 })
 export class NgMatFormsComponent implements OnInit {
 
@@ -34,15 +63,9 @@ export class NgMatFormsComponent implements OnInit {
     @Output() onChange: EventEmitter<any> = new EventEmitter();
     @Output() formChange: EventEmitter<any> = new EventEmitter();
     breakpoint: any;
-    inputType: type;
+    submitArray:any;
 
-    constructor() {
-        setTimeout(() => {
-            this.prepareDirective();
-        }, 1000);
-        this.breakpoint = (window.innerWidth <= 400) ? 1 :
-            ((window.innerWidth <= 700) ? 2 : this.Column);
-    }
+    constructor() { }
 
     onResize(event) {
         this.breakpoint = (event.target.innerWidth <= 400) ? 1 :
@@ -54,20 +77,35 @@ export class NgMatFormsComponent implements OnInit {
         this.FormGen.valueChanges.subscribe(value => {
             this.formChange.emit(value);
         });
+        this.breakpoint = (window.innerWidth <= 400) ? 1 :
+            ((window.innerWidth <= 700) ? 2 : this.Column);
+        this.submitArray = Array(3).fill(4);
+        console.log(this.submitArray);
+        
     }
 
     createForm(): FormGroup {
         const job = new FormGroup({});
         this.Fields.map(x => {
             let validators: any = x.validators;
+            /* if (x.type === FieldType.CheckBox) {
+                x.list.map((form) => {
+                    const control: FormControl = new FormControl(x.defaultValue, validators);
+                    job.addControl(x.formControlName, control);        
+                });
+            } */
             const control: FormControl = new FormControl(x.defaultValue, validators);
             job.addControl(x.formControlName, control);
         });
         return job;
     }
 
-    valueChange(formControlName: string) {
-        this.onChange.emit({ controlName: formControlName, value: this.FormGen.get(formControlName).value });
+    valueChange(formControlName: string, event: any) {
+        this.onChange.emit({
+            controlName: formControlName,
+            value: this.FormGen.get(formControlName).value,
+            event: event
+        });
     }
 
     submit() {
@@ -79,22 +117,6 @@ export class NgMatFormsComponent implements OnInit {
 
     trackByFormControlName(index: number, field: any): string {
         return field.formControlName;
-    }
-
-    prepareDirective() {
-        if (this.Fields.length > 0) {
-            this.Fields.forEach((item, i) => {
-                this.Fields[i]['alpha'] = (item.directive === directive.Alpha);
-                this.Fields[i]['input'] = (item.type === type.Input);
-                this.Fields[i]['select'] = (item.type === type.Select);
-                this.Fields[i]['radio'] = (item.type === type.Radio);
-                console.warn((item.directive === directive.Numeric));
-                this.Fields[i]['numeric'] = (item.directive === directive.Numeric);
-                this.Fields[i]['alphanumeric'] = (item.directive === directive.AlphaNumeric);
-                this.Fields[i]['custom'] = (item.directive === directive.Custom);
-                this.Fields[i]['reGex'] = item.regex;
-            });
-        }
     }
 
     getErrorMessage(control, fieldName) {

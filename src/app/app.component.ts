@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { type, Fields, directive } from 'ng-mat-forms';
+import { FieldType, Fields, Directive, NgMatFormsComponent } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.component';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -11,19 +11,17 @@ export class AppComponent {
 
     @ViewChild('temp', { read: false, static: false }) NgMatForm: NgMatFormsComponent;
 
-    constructor() {
+    constructor() { }
 
-    }
-
-    Fields: Array<Fields> = [{
-        type: type.Input,
+    Fields: Fields[] = [{
+        type: FieldType.Input,
         label: 'User Name',
         placeholder: 'Enter a User Name',
         formControlName: 'name',
-        directive: directive.AlphaNumeric,
+        directive: Directive.Numeric,
         validators: [Validators.required, Validators.minLength(5)]
     }, {
-        type: type.Input,
+        type: FieldType.MultiSelect,
         label: 'Password',
         placeholder: 'Enter a Password',
         formControlName: 'password',
@@ -38,7 +36,22 @@ export class AppComponent {
             }
         ]
     }, {
-        type: type.Radio,
+        type: FieldType.Radio,
+        label: 'Confirm Password',
+        placeholder: 'Enter a Password',
+        formControlName: 'cpassword',
+        list: [
+            {
+                name: 'Satheesh',
+                value: 'gdfgfdg'
+            },
+            {
+                name: 'Bhuvi',
+                value: 'I Love You'
+            }
+        ]
+    }, {
+        type: FieldType.CheckBox,
         label: 'Confirm Password',
         placeholder: 'Enter a Password',
         formControlName: 'cpassword',
