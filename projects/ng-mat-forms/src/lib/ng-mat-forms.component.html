@@ -5,44 +5,74 @@
             <mat-grid-tile *ngFor='let x of Fields;trackBy:trackByFormControlName;'>
                 <div *ngIf='x.type == "input"'>
                     <mat-form-field>
-                        <mat-label>{{ x.label }}</mat-label>
+                        <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true'>{{ x.label }}</mat-label>
                         <input matInput [placeholder]="x.placeholder" [formControlName]='x.formControlName'
                             (change)='valueChange(x.formControlName, $event)' [numbersOnly]='x.directive == "numeric"'
                             [alphabetOnly]='x.directive == "alpha"' [alphanumericOnly]='x.directive == "alphanumeric"'
                             [customRegex]='x.directive == "custom"' [regExp]='x.hasOwnProperty("reGex") ? x.reGex : ""'>
-                        <mat-error *ngIf='FormGen.get(x.formControlName).invalid'>
+                        <mat-error
+                            *ngIf='FormGen.get(x.formControlName).invalid && FormGen.get(x.formControlName).touched'>
                             {{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div *ngIf='x.type == "select" || x.type == "multiSelect"'>
                     <mat-form-field>
-                        <mat-label>{{ x.label }}</mat-label>
+                        <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true'>{{ x.label }}</mat-label>
                         <mat-select (selectionChange)='valueChange(x.formControlName, $event)'
                             [formControlName]='x.formControlName' [multiple]='x.type == "multiSelect"'>
                             <mat-option *ngFor="let sl of x.list" [value]="sl.value">
                                 {{ sl.name }}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf='FormGen.get(x.formControlName).invalid'>
+                        <mat-error
+                            *ngIf='FormGen.get(x.formControlName).invalid && FormGen.get(x.formControlName).touched'>
                             {{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div *ngIf='x.type == "radio"'>
-                    <mat-radio-group aria-label="x.label" [formControlName]='x.formControlName'>
-                        <mat-radio-button *ngFor="let item of x.list" [value]='item.value'>{{ item.name }}
-                        </mat-radio-button>
-                    </mat-radio-group>
-                    <mat-error *ngIf='FormGen.get(x.formControlName).invalid'>
+                    <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true'>{{ x.label }}</mat-label>
+                    <section class="example-section">
+                        <mat-radio-group aria-label="x.label" [formControlName]='x.formControlName'>
+                            <mat-radio-button *ngFor="let item of x.list" [value]='item.value'>{{ item.name }}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </section>
+                    <mat-error *ngIf='FormGen.get(x.formControlName).invalid && FormGen.get(x.formControlName).touched'>
                         {{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
                 </div>
                 <div *ngIf='x.type == "checkBox"'>
-                    <mat-label class="example-margin">{{ x.label }}</mat-label>
+                    <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true' class="example-margin">
+                        {{ x.label }}</mat-label>
                     <section class="example-section">
                         <mat-checkbox class="example-margin" *ngFor="let item of x.list"
                             [formControlName]='x.formControlName' [value]='item.value'>
                             {{ item.name }}</mat-checkbox>
                     </section>
-                    <mat-error *ngIf='FormGen.get(x.formControlName).invalid'>
+                    <mat-error *ngIf='FormGen.get(x.formControlName).invalid && FormGen.get(x.formControlName).touched'>
+                        {{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
+                </div>
+                <div *ngIf='x.type == "datePicker"'>
+                    <mat-form-field>
+                        <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true'>{{ x.label }}</mat-label>
+                        <input matInput [matDatepicker]="picker" [min]='x.minDate' [max]='x.maxDate'
+                            [placeholder]="x.placeholder" [formControlName]='x.formControlName'>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-error *ngIf='FormGen.get(x.formControlName).invalid && FormGen.get(x.formControlName).touched'>
+                        {{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
+                </div>
+                <div *ngIf='x.type == "autoComplete"'>
+                    <mat-form-field class="example-full-width">
+                        <input matInput [placeholder]="x.placeholder" aria-label="x.label" [matAutocomplete]="auto"
+                            [formControl]="x.formControlName">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let state of x.list | async" [value]="item.value">
+                                <span>{{item.name}}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <mat-error *ngIf='FormGen.get(x.formControlName).invalid && FormGen.get(x.formControlName).touched'>
                         {{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
                 </div>
             </mat-grid-tile>

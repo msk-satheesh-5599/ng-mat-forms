@@ -2,15 +2,34 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export interface Fields {
-    type: FieldType;
-    label: string;
-    placeholder: string;
-    formControlName: string;
-    directive?: Directive;
-    regex?: RegExp;
+    /**
+     * @description
+     * It's an variable to determine the type of the field.It's an part of the FieldType.  
+     * It's only on the FieldType Object.
+     * These are the available types of the fields [Input, Select, MultiSelect, Radio, DatePicker]
+     */
+    readonly type: FieldType;
+    /**
+     * @description
+     * It's an variable to show the field label..  
+     * This value is set to the placeholder of the field. 
+     */
+    readonly label: string;
+    /**
+     * @description
+     * It's an placeholder of the field. 
+     * This value is set to the placeholder of the field.  
+     */
+    readonly placeholder: string;
+    readonly formControlName: string;
+    readonly directive?: Directive;
+    readonly regex?: RegExp;
     defaultValue?: string;
-    validators?: Array<Validators>;
-    list?: Array<SelectList>;
+    readonly validators?: Array<Validators>;
+    readonly list?: Array<SelectList>;
+    readonly labelShow?: boolean;
+    readonly minDate?: Date;
+    readonly maxDate?: Date;
 }
 
 export interface SelectList {
@@ -31,7 +50,9 @@ export enum FieldType {
     Select = 'select',
     Radio = 'radio',
     MultiSelect = 'multiSelect',
-    CheckBox = 'checkBox'
+    CheckBox = 'checkBox',
+    DatePicker = 'datePicker',
+    AutoComplete = 'autoComplete'
 }
 
 
@@ -46,7 +67,7 @@ export enum FieldType {
             display: flex;
             align-content: center;
             align-items: center;
-            height: 60px;
+            height: 40px;
         }
 
         .example-margin {
@@ -56,14 +77,14 @@ export enum FieldType {
 })
 export class NgMatFormsComponent implements OnInit {
 
-    @Input() Fields: Array<Fields> = [];
-    @Input() Column: any;
+    @Input() readonly Fields: Array<Fields> = [];
+    @Input() readonly Column: any;
     FormGen: FormGroup;
-    @Output() getFormValue: EventEmitter<any> = new EventEmitter();
-    @Output() onChange: EventEmitter<any> = new EventEmitter();
-    @Output() formChange: EventEmitter<any> = new EventEmitter();
+    @Output() readonly getFormValue: EventEmitter<any> = new EventEmitter();
+    @Output() readonly onChange: EventEmitter<any> = new EventEmitter();
+    @Output() readonly formChange: EventEmitter<any> = new EventEmitter();
     breakpoint: any;
-    submitArray:any;
+    submitArray: any;
 
     constructor() { }
 
@@ -79,9 +100,7 @@ export class NgMatFormsComponent implements OnInit {
         });
         this.breakpoint = (window.innerWidth <= 400) ? 1 :
             ((window.innerWidth <= 700) ? 2 : this.Column);
-        this.submitArray = Array(3).fill(4);
-        console.log(this.submitArray);
-        
+        this.submitArray = Array(3).fill(0);
     }
 
     createForm(): FormGroup {
@@ -113,6 +132,7 @@ export class NgMatFormsComponent implements OnInit {
     }
 
     setValue(formControlName: string, value: any) {
+        this.FormGen.patchValue({ [formControlName]: value });
     }
 
     trackByFormControlName(index: number, field: any): string {

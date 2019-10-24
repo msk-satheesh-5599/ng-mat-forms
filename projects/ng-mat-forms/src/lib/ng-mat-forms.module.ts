@@ -15,7 +15,10 @@ import {
     MatButtonModule,
     MatSelectModule,
     MatRadioModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatAutocompleteModule,
+    MatNativeDateModule
 } from '@angular/material';
 import { CommonModule } from '@angular/common';
 
@@ -36,6 +39,9 @@ import { CommonModule } from '@angular/common';
         MatSelectModule,
         MatRadioModule,
         MatCheckboxModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatAutocompleteModule,
         ReactiveFormsModule
     ],
     providers: [NgMatFormsService],

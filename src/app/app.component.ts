@@ -7,18 +7,15 @@ import { Validators } from '@angular/forms';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
 
     @ViewChild('temp', { read: false, static: false }) NgMatForm: NgMatFormsComponent;
-
-    constructor() { }
-
     Fields: Fields[] = [{
         type: FieldType.Input,
         label: 'User Name',
         placeholder: 'Enter a User Name',
         formControlName: 'name',
-        directive: Directive.Numeric,
+        directive: Directive.AlphaNumeric,
         validators: [Validators.required, Validators.minLength(5)]
     }, {
         type: FieldType.MultiSelect,
@@ -27,12 +24,12 @@ export class AppComponent {
         formControlName: 'password',
         list: [
             {
-                name: 'Satheesh',
-                value: 'I Love You Pondati'
+                name: 'Infinity War',
+                value: 'Avengers'
             },
             {
-                name: 'Bhuvi',
-                value: 'I Love You Mama'
+                name: 'End Game',
+                value: 'Avengers'
             }
         ]
     }, {
@@ -42,12 +39,12 @@ export class AppComponent {
         formControlName: 'cpassword',
         list: [
             {
-                name: 'Satheesh',
-                value: 'gdfgfdg'
+                name: 'Infinity War',
+                value: 'Avengers'
             },
             {
-                name: 'Bhuvi',
-                value: 'I Love You'
+                name: 'End Game',
+                value: 'Avengers End Game'
             }
         ]
     }, {
@@ -57,19 +54,31 @@ export class AppComponent {
         formControlName: 'cpassword',
         list: [
             {
-                name: 'Satheesh',
-                value: 'gdfgfdg'
+                name: 'Infinity War',
+                value: 'Avengers'
             },
             {
-                name: 'Bhuvi',
-                value: 'I Love You'
+                name: 'End Game',
+                value: 'Avengers'
             }
         ]
+    }, {
+        type: FieldType.DatePicker,
+        label: 'Date of Birth',
+        placeholder: 'Choose a date of birth',
+        formControlName: 'dob',
+        validators: [Validators.required]
     }];
 
-    closeTag() {
-        return "sdfdsfsdfsdfdsfdsf";
+    constructor() { }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.NgMatForm.setValue('name', 'Satheesh');
+        }, 1000);
     }
+
+
 
     getForm(form) {
         console.log(form);
