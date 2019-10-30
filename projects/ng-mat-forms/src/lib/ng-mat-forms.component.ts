@@ -1,6 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+
+export type fieldType = 'input' | 'select' | 'radio' | 'multiSelect' | 'checkBox' 
+| 'datePicker' | 'autoComplete';
+
+
 export interface Fields {
     /**
      * @description
@@ -8,7 +13,7 @@ export interface Fields {
      * It's only on the FieldType Object.
      * These are the available types of the fields [Input, Select, MultiSelect, Radio, DatePicker]
      */
-    readonly type: FieldType;
+    readonly type: fieldType;
     /**
      * @description
      * It's an variable to show the field label..  
@@ -53,6 +58,10 @@ export enum FieldType {
     CheckBox = 'checkBox',
     DatePicker = 'datePicker',
     AutoComplete = 'autoComplete'
+}
+
+export declare function setValue(...param: any) {
+
 }
 
 
@@ -131,7 +140,7 @@ export class NgMatFormsComponent implements OnInit {
         this.getFormValue.emit(this.FormGen.value);
     }
 
-    setValue(formControlName: string, value: any) {
+    readonly setValue: any = (formControlName: string, value: any) => {
         this.FormGen.patchValue({ [formControlName]: value });
     }
 
@@ -139,23 +148,17 @@ export class NgMatFormsComponent implements OnInit {
         return field.formControlName;
     }
 
-    getErrorMessage(control, fieldName) {
-        if (control.hasError) {
-            if (control.errors != null) {
-                let error = Object.keys(control.errors)[0];
-                return this.getErrorMessageField(error, control.errors[error], fieldName);
-            }
-            return '';
+    getErrorMessage(control: FormControl, fieldName: string): string {
+        for (let error in control.errors) {
+            return {
+                required: `${fieldName} is required`,
+                minlength: `Minimun Length for ${fieldName} is 
+                    ${control.errors[error].requiredLength}`
+            }[error];
         }
+        return;
     }
 
-    getErrorMessageField(errors: string, obj: any, fieldName: string) {
-        let config = {
-            required: `${fieldName} is required`,
-            minlength: `Minimun Length for ${fieldName} is ${obj.requiredLength}`
-        }
-        return config[errors];
-    }
 }
 
 

@@ -11,14 +11,14 @@ export class AppComponent implements AfterViewInit {
 
     @ViewChild('temp', { read: false, static: false }) NgMatForm: NgMatFormsComponent;
     Fields: Fields[] = [{
-        type: FieldType.Input,
+        type: 'input',
         label: 'User Name',
         placeholder: 'Enter a User Name',
         formControlName: 'name',
         directive: Directive.AlphaNumeric,
         validators: [Validators.required, Validators.minLength(5)]
     }, {
-        type: FieldType.MultiSelect,
+        type: 'multiSelect',
         label: 'Password',
         placeholder: 'Enter a Password',
         formControlName: 'password',
@@ -33,7 +33,7 @@ export class AppComponent implements AfterViewInit {
             }
         ]
     }, {
-        type: FieldType.Radio,
+        type: 'radio',
         label: 'Confirm Password',
         placeholder: 'Enter a Password',
         formControlName: 'cpassword',
@@ -48,7 +48,7 @@ export class AppComponent implements AfterViewInit {
             }
         ]
     }, {
-        type: FieldType.CheckBox,
+        type: 'checkBox',
         label: 'Confirm Password',
         placeholder: 'Enter a Password',
         formControlName: 'cpassword',
@@ -63,7 +63,7 @@ export class AppComponent implements AfterViewInit {
             }
         ]
     }, {
-        type: FieldType.DatePicker,
+        type: 'datePicker',
         label: 'Date of Birth',
         placeholder: 'Choose a date of birth',
         formControlName: 'dob',
