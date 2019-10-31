@@ -1,13 +1,16 @@
 import { Injectable, Directive, Input, ElementRef, HostListener, Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Injectable({
     providedIn: 'root',
 })
 export class NgMatFormsService {
-
-
+    FormGen: FormGroup;
     constructor() { }
+
+    readonly setValue: any = (formControlName: string, value: any) => {
+        this.FormGen.patchValue({ [formControlName]: value });
+    }
 }
 
 @Directive({

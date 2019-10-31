@@ -1,7 +1,7 @@
 <ng-container *ngIf="Fields.length > 0; then thenTemplate; else elseTemplate"></ng-container>
 <ng-template #thenTemplate>
     <mat-grid-list responsive='true' [cols]="breakpoint" rowHeight="100px" (window:resize)="onResize($event)">
-        <form [formGroup]='FormGen'>
+        <form [formGroup]='service.FormGen'>
             <mat-grid-tile *ngFor='let x of Fields;trackBy:trackByFormControlName;'>
                 <div *ngIf='x.type == "input"'>
                     <mat-form-field>
@@ -11,8 +11,8 @@
                             [alphabetOnly]='x.directive == "alpha"' [alphanumericOnly]='x.directive == "alphanumeric"'
                             [customRegex]='x.directive == "custom"' [regExp]='x.hasOwnProperty("reGex") ? x.reGex : ""'>
                         <mat-error
-                            *ngIf='FormGen.get(x.formControlName).invalid && FormGen.get(x.formControlName).touched'>
-                            {{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
+                            *ngIf='service.FormGen.get(x.formControlName).invalid && service.FormGen.get(x.formControlName).touched'>
+                            {{getErrorMessage(service.FormGen.get(x.formControlName), x.label)}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div *ngIf='x.type == "select" || x.type == "multiSelect"'>
@@ -25,8 +25,8 @@
                             </mat-option>
                         </mat-select>
                         <mat-error
-                            *ngIf='FormGen.get(x.formControlName).invalid && FormGen.get(x.formControlName).touched'>
-                            {{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
+                            *ngIf='service.FormGen.get(x.formControlName).invalid && service.FormGen.get(x.formControlName).touched'>
+                            {{getErrorMessage(service.FormGen.get(x.formControlName), x.label)}}</mat-error>
                     </mat-form-field>
                 </div>
                 <div *ngIf='x.type == "radio"'>
@@ -37,8 +37,8 @@
                             </mat-radio-button>
                         </mat-radio-group>
                     </section>
-                    <mat-error *ngIf='FormGen.get(x.formControlName).invalid && FormGen.get(x.formControlName).touched'>
-                        {{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
+                    <mat-error *ngIf='service.FormGen.get(x.formControlName).invalid && service.FormGen.get(x.formControlName).touched'>
+                        {{getErrorMessage(service.FormGen.get(x.formControlName), x.label)}}</mat-error>
                 </div>
                 <div *ngIf='x.type == "checkBox"'>
                     <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true' class="example-margin">
@@ -48,8 +48,8 @@
                             [formControlName]='x.formControlName' [value]='item.value'>
                             {{ item.name }}</mat-checkbox>
                     </section>
-                    <mat-error *ngIf='FormGen.get(x.formControlName).invalid && FormGen.get(x.formControlName).touched'>
-                        {{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
+                    <mat-error *ngIf='service.FormGen.get(x.formControlName).invalid && service.FormGen.get(x.formControlName).touched'>
+                        {{getErrorMessage(service.FormGen.get(x.formControlName), x.label)}}</mat-error>
                 </div>
                 <div *ngIf='x.type == "datePicker"'>
                     <mat-form-field>
@@ -59,8 +59,8 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                    <mat-error *ngIf='FormGen.get(x.formControlName).invalid && FormGen.get(x.formControlName).touched'>
-                        {{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
+                    <mat-error *ngIf='service.FormGen.get(x.formControlName).invalid && service.FormGen.get(x.formControlName).touched'>
+                        {{getErrorMessage(service.FormGen.get(x.formControlName), x.label)}}</mat-error>
                 </div>
                 <div *ngIf='x.type == "autoComplete"'>
                     <mat-form-field class="example-full-width">
@@ -72,8 +72,8 @@
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
-                    <mat-error *ngIf='FormGen.get(x.formControlName).invalid && FormGen.get(x.formControlName).touched'>
-                        {{getErrorMessage(FormGen.get(x.formControlName), x.label)}}</mat-error>
+                    <mat-error *ngIf='service.FormGen.get(x.formControlName).invalid && service.FormGen.get(x.formControlName).touched'>
+                        {{getErrorMessage(service.FormGen.get(x.formControlName), x.label)}}</mat-error>
                 </div>
             </mat-grid-tile>
         </form>
