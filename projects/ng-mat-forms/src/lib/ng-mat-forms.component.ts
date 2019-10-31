@@ -62,7 +62,7 @@ export interface Fields {
      * This value used is set as the default value for the formControl of the formGroup
      * Non-Mandatory to the Field Object    
     **/
-    defaultValue?: string;
+    defaultValue?: string | number;
     /**
      * @description
      * This value is for validating the fields and it accepts the form validators
