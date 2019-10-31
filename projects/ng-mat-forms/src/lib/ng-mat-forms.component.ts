@@ -2,10 +2,21 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgMatFormsService } from './ng-mat-forms.service';;
 
-
+/**
+ * @description
+ * Defines the map of field types for creating a form
+ *
+ * @publicApi
+ */
 export type fieldType = 'input' | 'select' | 'radio' | 'multiSelect' | 'checkBox'
     | 'datePicker' | 'autoComplete';
 
+/**
+ * @description
+ * Defines the map of directives to determine the behaviour of the field
+ *
+ * @publicApi
+ */
 export type directive = 'alpha' | 'alphanumeric' | 'numeric' | 'custom';
 
 
@@ -89,24 +100,6 @@ export interface Fields {
 export interface SelectList {
     name: string;
     value: string;
-    formControlName?: string;
-}
-
-export enum Directive {
-    Alpha = 'alpha',
-    AlphaNumeric = 'alphanumeric',
-    Numeric = 'numeric',
-    Custom = 'custom'
-}
-
-export enum FieldType {
-    Input = 'input',
-    Select = 'select',
-    Radio = 'radio',
-    MultiSelect = 'multiSelect',
-    CheckBox = 'checkBox',
-    DatePicker = 'datePicker',
-    AutoComplete = 'autoComplete'
 }
 
 

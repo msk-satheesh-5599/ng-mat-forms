@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { Fields, Directive } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.component';
+import { Fields } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.component';
 import { NgMatFormsService } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.service';
 import { Validators } from '@angular/forms';
 
