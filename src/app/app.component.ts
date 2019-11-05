@@ -1,6 +1,5 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { Fields } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.component';
-import { NgMatFormsService } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.service';
+import { NgMatFormsService, Fields } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.service';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -15,7 +14,7 @@ export class AppComponent implements AfterViewInit {
         label: 'User Name',
         placeholder: 'Enter a User Name',
         formControlName: 'name',
-        directive: 'alpha',
+        directive: 'numeric',
         validators: [Validators.required, Validators.minLength(5)]
     }, {
         type: 'select',

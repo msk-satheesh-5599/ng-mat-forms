@@ -1,107 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgMatFormsService } from './ng-mat-forms.service';;
-
-/**
- * @description
- * Defines the map of field types for creating a form
- *
- * @publicApi
- */
-export type fieldType = 'input' | 'select' | 'radio' | 'multiSelect' | 'checkBox'
-    | 'datePicker' | 'autoComplete';
-
-/**
- * @description
- * Defines the map of directives to determine the behaviour of the field
- *
- * @publicApi
- */
-export type directive = 'alpha' | 'alphanumeric' | 'numeric' | 'custom';
-
-
-export interface Fields {
-    /**
-     * @description
-     * It's an variable to determine the type of the field.It's an part of the FieldType.
-     * These are the available types of the fields 'input' | 'select' | 'radio' | 'multiSelect' | 'checkBox' | 'datePicker' | 'autoComplete'
-    **/
-    readonly type: fieldType;
-    /**
-     * @description
-     * It's an variable to show the field label 
-     * This value is set to the placeholder of the field 
-    **/
-    readonly label: string;
-    /**
-     * @description
-     * It's an placeholder of the field 
-     * This value is set to the placeholder of the field  
-    **/
-    readonly placeholder: string;
-    /**
-     * @description
-     * It's an formControlName of the field
-     * With this value only we need set the value    
-    **/
-    readonly formControlName: string;
-    /**
-     * @description
-     * This value used for the determine the acceptable values of the field
-     * The acceptable values are 'alpha' | 'alphanumeric' | 'numeric' | 'custom'  
-    **/
-    readonly directive?: directive;
-    /**
-     * @description
-     * This value used for the fields behaviour the regex
-     * It is used only in the time of value of the directive is custom
-    **/
-    readonly regex?: RegExp;
-    /**
-     * @description
-     * This value used is set as the default value for the formControl of the formGroup
-     * Non-Mandatory to the Field Object    
-    **/
-    defaultValue?: string | number;
-    /**
-     * @description
-     * This value is for validating the fields and it accepts the form validators
-     * Non-Mandatory to the Field Object    
-    **/
-    readonly validators?: Validators;
-    /**
-     * @description
-     * This value is used for the select lists and it's an array of objects 
-     * @template
-     * ### let list = [{name: '', value: '' },{name: '', value: '' }];
-     * Non-Mandatory to the Field Object    
-    **/
-    readonly list?: SelectList[];
-    /**
-     * @description
-     * This value is used for hiding the label and show the label and it accepts the boolean
-     * Non-Mandatory to the Field Object    
-    **/
-    readonly labelShow?: boolean;
-    /**
-     * @description
-     * Used for disable the datepicker since the date
-     * Non-Mandatory to the Field Object    
-    **/
-    readonly minDate?: Date;
-    /**
-     * @description
-     * Used for disable the datepicker untill the date
-     * Non-Mandatory to the Field Object    
-    **/
-    readonly maxDate?: Date;
-}
-
-export interface SelectList {
-    name: string;
-    value: string;
-}
-
+import { FormControl, FormGroup } from '@angular/forms';
+import { NgMatFormsService, Fields } from './ng-mat-forms.service';
 
 @Component({
     selector: 'ng-mat-forms',
@@ -124,7 +23,7 @@ export interface SelectList {
 })
 export class NgMatFormsComponent implements OnInit {
 
-    @Input() readonly Fields: Array<Fields> = [];
+    @Input() readonly Fields: Fields[];
     @Input() readonly Column: any;
     FormGen: FormGroup;
     @Output() readonly getFormValue: EventEmitter<any> = new EventEmitter();
@@ -135,7 +34,7 @@ export class NgMatFormsComponent implements OnInit {
 
     constructor(private service: NgMatFormsService) { }
 
-    onResize(event) {
+    onResize(event): void {
         this.breakpoint = (event.target.innerWidth <= 400) ? 1 :
             ((event.target.innerWidth <= 700) ? 2 : this.Column);
     }
@@ -143,6 +42,7 @@ export class NgMatFormsComponent implements OnInit {
     ngOnInit() {
         this.service.FormGen = this.createForm();
         this.service.FormGen.valueChanges.subscribe(value => {
+            this.replaceValue(value);
             this.formChange.emit(value);
         });
         this.breakpoint = (window.innerWidth <= 400) ? 1 :
@@ -166,7 +66,7 @@ export class NgMatFormsComponent implements OnInit {
         return job;
     }
 
-    valueChange(formControlName: string, event: any) {
+    valueChange(formControlName: string, event: any): void {
         this.onChange.emit({
             controlName: formControlName,
             value: this.service.FormGen.get(formControlName).value,
@@ -174,7 +74,7 @@ export class NgMatFormsComponent implements OnInit {
         });
     }
 
-    submit() {
+    submit(): void {
         this.getFormValue.emit(this.service.FormGen.value);
     }
 
@@ -191,6 +91,30 @@ export class NgMatFormsComponent implements OnInit {
             }[error];
         }
         return;
+    }
+
+    replaceValue(value): void {
+        Object.keys(value).map(key => {
+            let field: any = this.Fields.find(x => x.formControlName == key);
+            if (field.hasOwnProperty('directive')) {
+                switch (field.directive) {
+                    case "numeric":
+                        this.service.FormGen.get(key).setValue(value[key].replace(/[a-zA-Z]*/g, ''));
+                        break;
+                    case "alpha":
+                        this.service.FormGen.get(key).setValue(value[key].replace(/[0-9]*/g, '').replace(/[^\w\s]/gi, ''));
+                        break;
+                    case "alphanumeric":
+                        this.service.FormGen.get(key).setValue(value[key].replace(/[^\w\s]/gi, ''));
+                        break;
+                    case "custom":
+                        this.service.FormGen.get(key).setValue(value[key].replace(/[a-zA-Z]*/g, ''));
+                        break;
+                    default:
+                        break
+                }
+            }
+        });
     }
 
 }
