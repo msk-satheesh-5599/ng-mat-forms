@@ -1,6 +1,7 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { NgMatFormsService, Fields } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.service';
+import { NgMatFormsService } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.service';
 import { Validators } from '@angular/forms';
+import { fields } from './../../projects/ng-mat-forms/src/lib/interfaces/fields.interface';
 
 @Component({
     selector: 'app-root',
@@ -9,12 +10,12 @@ import { Validators } from '@angular/forms';
 })
 export class AppComponent implements AfterViewInit {
 
-    Fields: Fields[] = [{
+    Fields: fields[] = [{
         type: 'input',
         label: 'User Name',
         placeholder: 'Enter a User Name',
         formControlName: 'name',
-        directive: 'numeric',
+        directive: 'alphabetOnly',
         validators: [Validators.required, Validators.minLength(5)]
     }, {
         type: 'select',
@@ -45,7 +46,8 @@ export class AppComponent implements AfterViewInit {
                 name: 'End Game',
                 value: 'Avengers End Game'
             }
-        ]
+        ],
+        validators: [Validators.required]
     }, {
         type: 'checkBox',
         label: 'Confirm Password',

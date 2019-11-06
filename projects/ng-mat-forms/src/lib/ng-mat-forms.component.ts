@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { NgMatFormsService, Fields } from './ng-mat-forms.service';
+import { NgMatFormsService } from './ng-mat-forms.service';
+import { fields } from './interfaces/fields.interface';
 
 @Component({
     selector: 'ng-mat-forms',
@@ -23,7 +24,7 @@ import { NgMatFormsService, Fields } from './ng-mat-forms.service';
 })
 export class NgMatFormsComponent implements OnInit {
 
-    @Input() readonly Fields: Fields[];
+    @Input() readonly Fields: fields[];
     @Input() readonly Column: any;
     FormGen: FormGroup;
     @Output() readonly getFormValue: EventEmitter<any> = new EventEmitter();
@@ -32,7 +33,7 @@ export class NgMatFormsComponent implements OnInit {
     breakpoint: any;
     submitArray: any;
 
-    constructor(private service: NgMatFormsService) { }
+    constructor(private formService: NgMatFormsService) { }
 
     onResize(event): void {
         this.breakpoint = (event.target.innerWidth <= 400) ? 1 :
@@ -40,9 +41,9 @@ export class NgMatFormsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.service.FormGen = this.createForm();
-        this.service.FormGen.valueChanges.subscribe(value => {
-            this.replaceValue(value);
+        this.formService.FormGen = this.createForm();
+        this.formService.Fields = this.Fields;
+        this.formService.FormGen.valueChanges.subscribe(value => {
             this.formChange.emit(value);
         });
         this.breakpoint = (window.innerWidth <= 400) ? 1 :
@@ -60,8 +61,7 @@ export class NgMatFormsComponent implements OnInit {
                     job.addControl(x.formControlName, control);        
                 });
             } */
-            const control: FormControl = new FormControl(x.defaultValue, validators);
-            job.addControl(x.formControlName, control);
+            job.addControl(x.formControlName, new FormControl(x.defaultValue, validators));
         });
         return job;
     }
@@ -69,13 +69,13 @@ export class NgMatFormsComponent implements OnInit {
     valueChange(formControlName: string, event: any): void {
         this.onChange.emit({
             controlName: formControlName,
-            value: this.service.FormGen.get(formControlName).value,
+            value: this.formService.FormGen.get(formControlName).value,
             event: event
         });
     }
 
     submit(): void {
-        this.getFormValue.emit(this.service.FormGen.value);
+        this.getFormValue.emit(this.formService.FormGen.value);
     }
 
     trackByFormControlName(index: number, field: any): string {
@@ -91,30 +91,6 @@ export class NgMatFormsComponent implements OnInit {
             }[error];
         }
         return;
-    }
-
-    replaceValue(value): void {
-        Object.keys(value).map(key => {
-            let field: any = this.Fields.find(x => x.formControlName == key);
-            if (field.hasOwnProperty('directive')) {
-                switch (field.directive) {
-                    case "numeric":
-                        this.service.FormGen.get(key).setValue(value[key].replace(/[a-zA-Z]*/g, ''));
-                        break;
-                    case "alpha":
-                        this.service.FormGen.get(key).setValue(value[key].replace(/[0-9]*/g, '').replace(/[^\w\s]/gi, ''));
-                        break;
-                    case "alphanumeric":
-                        this.service.FormGen.get(key).setValue(value[key].replace(/[^\w\s]/gi, ''));
-                        break;
-                    case "custom":
-                        this.service.FormGen.get(key).setValue(value[key].replace(/[a-zA-Z]*/g, ''));
-                        break;
-                    default:
-                        break
-                }
-            }
-        });
     }
 
 }
