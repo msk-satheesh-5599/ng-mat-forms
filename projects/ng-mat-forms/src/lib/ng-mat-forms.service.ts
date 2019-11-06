@@ -21,13 +21,13 @@ export class NgMatFormsService {
             let field: any = this.Fields.find(x => x.formControlName == key);
             if (field.hasOwnProperty('directive')) {
                 switch (field.directive) {
-                    case "numeric":
+                    case "numericOnly":
                         value = value.replace(/[a-zA-Z]*/g, '');
                         break;
-                    case "alpha":
+                    case "alphabetOnly":
                         value = value.replace(/[0-9]*/g, '').replace(/[^\w\s]/gi, '');
                         break;
-                    case "alphanumeric":
+                    case "alphanumericOnly":
                         value = value.replace(/[^\w\s]/gi, '');
                         break;
                     case "custom":

@@ -16,7 +16,7 @@ export type fieldType = 'input' | 'select' | 'radio' | 'multiSelect' | 'checkBox
  *
  * @publicApi
  */
-export type directive = 'alphabetOnly' | 'alphanumericOnly' | 'numericOnly' | 'custom' | '';
+export type directive = 'alphabetOnly' | 'alphanumericOnly' | 'numericOnly' | 'custom';
 
 export interface fields {
     /**
@@ -93,5 +93,11 @@ export interface fields {
      * Non-Mandatory to the Field Object    
     **/
     readonly maxDate?: Date;
+    /**
+     * @description
+     * Used for disable the field in the forms
+     * Non-Mandatory to the Field Object    
+    **/
+    readonly disable?: boolean;
 }
 

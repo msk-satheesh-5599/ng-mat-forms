@@ -16,7 +16,8 @@ export class AppComponent implements AfterViewInit {
         placeholder: 'Enter a User Name',
         formControlName: 'name',
         directive: 'alphabetOnly',
-        validators: [Validators.required, Validators.minLength(5)]
+        validators: [Validators.required, Validators.minLength(5)],
+        disable: true
     }, {
         type: 'select',
         label: 'Password',

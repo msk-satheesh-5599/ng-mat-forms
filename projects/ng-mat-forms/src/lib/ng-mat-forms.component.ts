@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgMatFormsService } from './ng-mat-forms.service';
 import { fields } from './interfaces/fields.interface';
@@ -22,7 +22,7 @@ import { fields } from './interfaces/fields.interface';
         }
     `]
 })
-export class NgMatFormsComponent implements OnInit {
+export class NgMatFormsComponent implements OnInit, AfterViewInit {
 
     @Input() readonly Fields: fields[];
     @Input() readonly Column: any;
@@ -49,6 +49,10 @@ export class NgMatFormsComponent implements OnInit {
         this.breakpoint = (window.innerWidth <= 400) ? 1 :
             ((window.innerWidth <= 700) ? 2 : this.Column);
         this.submitArray = Array(3).fill(0);
+    }
+
+    ngAfterViewInit() {
+        this.disableFields();
     }
 
     createForm(): FormGroup {
@@ -91,6 +95,16 @@ export class NgMatFormsComponent implements OnInit {
             }[error];
         }
         return;
+    }
+
+    disableFields(): void {
+        Object.keys(this.formService.FormGen.controls).map(control => {
+            let field = this.Fields.find(x => x.formControlName == control);
+            if (field.hasOwnProperty('disable')) {
+                if (field.disable)
+                    this.formService.FormGen.get(control).disable({ onlySelf: true });
+            }
+        });
     }
 
 }
