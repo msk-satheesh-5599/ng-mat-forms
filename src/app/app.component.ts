@@ -70,7 +70,8 @@ export class AppComponent implements AfterViewInit {
     }];
 
     option: Options = {
-        column: 3
+        column: 3,
+        errorMsgOnSubmit: true
     };
 
     constructor(private service: NgMatFormsService) { }

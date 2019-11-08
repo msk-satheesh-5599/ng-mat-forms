@@ -1,8 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormGroupDirective, NgForm } from '@angular/forms';
 import { NgMatFormsService } from './ng-mat-forms.service';
 import { fields } from './interfaces/fields.interface';
 import { Options } from './interfaces/options.interface';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+        const isSubmitted = form && form.submitted;
+        return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    }
+}
 
 @Component({
     selector: 'ng-mat-forms',
@@ -29,24 +38,29 @@ export class NgMatFormsComponent implements OnInit, AfterViewInit {
     @Output() readonly getFormValue: EventEmitter<any> = new EventEmitter();
     @Output() readonly onChange: EventEmitter<any> = new EventEmitter();
     @Output() readonly formChange: EventEmitter<any> = new EventEmitter();
-    breakpoint: any;
-    submitArray: any;
+    breakpoint: Number;
+    submitArray: Array<Number>;
+    formSubmit: boolean;
+    matcher = new ErrorStateMatcher();
 
     constructor(private formService: NgMatFormsService) { }
 
     onResize(event): void {
         this.breakpoint = (event.target.innerWidth <= 400) ? 1 :
             ((event.target.innerWidth <= 700) ? 2 : this.options.column);
+        this.submitArray = Array(Number(this.breakpoint)).fill(0);
     }
 
     ngOnInit() {
         this.formService.FormGen = this.createForm();
         this.formService.Fields = this.Fields;
+        this.formSubmit = ('errorMsgOnSubmit' in this.options) ? ((this.options.errorMsgOnSubmit) ? false : true) : true;
         this.formService.FormGen.valueChanges.subscribe(value => {
+            this.formService.FormGen.markAsUntouched();
+            this.formService.FormGen.setErrors(null);
             this.formChange.emit(value);
         });
-        this.breakpoint = (window.innerWidth <= 400) ? 1 :
-            ((window.innerWidth <= 700) ? 2 : this.options.column);
+        this.breakpoint = (window.innerWidth <= 400) ? 1 : ((window.innerWidth <= 700) ? 2 : this.options.column);
         this.submitArray = Array(Number(this.options.column)).fill(0);
     }
 
@@ -55,7 +69,7 @@ export class NgMatFormsComponent implements OnInit, AfterViewInit {
     }
 
     createForm(): FormGroup {
-        const job = new FormGroup({}, { validators: Validators.required });
+        const job = new FormGroup({}, { updateOn: 'submit' });
         this.Fields.map(x => {
             let validators: any = x.validators;
             /* if (x.type === FieldType.CheckBox) {
@@ -71,6 +85,11 @@ export class NgMatFormsComponent implements OnInit, AfterViewInit {
     }
 
     valueChange(formControlName: string, event: any): void {
+        console.log({
+            controlName: formControlName,
+            value: this.formService.FormGen.get(formControlName).value,
+            event: event
+        });
         this.onChange.emit({
             controlName: formControlName,
             value: this.formService.FormGen.get(formControlName).value,
@@ -79,6 +98,7 @@ export class NgMatFormsComponent implements OnInit, AfterViewInit {
     }
 
     submit(): void {
+        (this.formSubmit) ? '' : this.formSubmit = true;
         this.validateAllFormFields(this.formService.FormGen);
         this.getFormValue.emit({ formValue: this.formService.FormGen.getRawValue(), formStatus: this.formService.FormGen.valid });
     }
