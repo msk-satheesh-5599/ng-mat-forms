@@ -10,7 +10,7 @@
                             (change)='valueChange(x.formControlName, $event)' [numbersOnly]='x.directive == "numeric"'
                             [alphabetOnly]='x.directive == "alpha"' [alphanumericOnly]='x.directive == "alphanumeric"'
                             [customRegex]='x.directive == "custom"' [regExp]='x.hasOwnProperty("reGex") ? x.reGex : ""'
-                            [disableField]='x.hasOwnProperty("disable") ? x.disable : true'>
+                            [disableField]='x.hasOwnProperty("disable") ? x.disable : false'>
                         <mat-error
                             *ngIf='formService.FormGen.get(x.formControlName).invalid && formService.FormGen.get(x.formControlName).touched'>
                             {{getErrorMessage(formService.FormGen.get(x.formControlName), x.label)}}</mat-error>
@@ -86,8 +86,7 @@
     <mat-grid-list [cols]="breakpoint" rowHeight="50px">
         <mat-grid-tile *ngFor="let item of submitArray;let i = index;">
             <div>
-                <button *ngIf="(i+1) == submitArray.length" mat-raised-button [disabled]='formService.FormGen.valid'
-                    (click)='submit()'>Submit</button>
+                <button *ngIf="(i+1) == submitArray.length" mat-raised-button (click)='submit()'>Submit</button>
             </div>
         </mat-grid-tile>
     </mat-grid-list>

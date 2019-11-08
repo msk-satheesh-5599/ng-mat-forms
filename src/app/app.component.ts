@@ -2,6 +2,7 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { NgMatFormsService } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.service';
 import { Validators } from '@angular/forms';
 import { fields } from './../../projects/ng-mat-forms/src/lib/interfaces/fields.interface';
+import { Options } from './../../projects/ng-mat-forms/src/lib/interfaces/options.interface';
 
 @Component({
     selector: 'app-root',
@@ -16,8 +17,7 @@ export class AppComponent implements AfterViewInit {
         placeholder: 'Enter a User Name',
         formControlName: 'name',
         directive: 'alphabetOnly',
-        validators: [Validators.required, Validators.minLength(5)],
-        disable: true
+        validators: [Validators.required, Validators.email],
     }, {
         type: 'select',
         label: 'Password',
@@ -53,14 +53,10 @@ export class AppComponent implements AfterViewInit {
         type: 'checkBox',
         label: 'Confirm Password',
         placeholder: 'Enter a Password',
-        formControlName: 'cpassword',
+        formControlName: 'checkbox',
         list: [
             {
                 name: 'Infinity War',
-                value: 'Avengers'
-            },
-            {
-                name: 'End Game',
                 value: 'Avengers'
             }
         ]
@@ -73,11 +69,16 @@ export class AppComponent implements AfterViewInit {
         minDate: new Date('2019-01-01')
     }];
 
+    option: Options = {
+        column: 3
+    };
+
     constructor(private service: NgMatFormsService) { }
 
     ngAfterViewInit() {
         setTimeout(() => {
-            this.service.setValue('name', 'Satheesh');
+            this.service.setValue('name', 'msk');
+            /* this.service.setControlDisable('name'); */
         }, 1000);
     }
 

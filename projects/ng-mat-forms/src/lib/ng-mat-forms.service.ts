@@ -1,9 +1,13 @@
 import { Injectable, Input, Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { fields } from './interfaces/fields.interface';
 
+export type formValue = {
+    [key: string]: string
+}
+
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class NgMatFormsService {
     FormGen: FormGroup;
@@ -16,28 +20,54 @@ export class NgMatFormsService {
         });
     }
 
-    readonly replaceValue = (key, value) => {
+    readonly patchValue: any = (obj: formValue) => {
+        Object.keys(obj).map(x => {
+            this.setValue(x, obj[x]);
+        });
+    }
+
+    readonly replaceValue = (...params) => {
         return new Promise((resolve) => {
-            let field: any = this.Fields.find(x => x.formControlName == key);
+            let field: any = this.Fields.find(x => x.formControlName == params[0]);
             if (field.hasOwnProperty('directive')) {
                 switch (field.directive) {
                     case "numericOnly":
-                        value = value.replace(/[a-zA-Z]*/g, '');
+                        params[1] = params[1].replace(/[a-zA-Z]*/g, '');
                         break;
                     case "alphabetOnly":
-                        value = value.replace(/[0-9]*/g, '').replace(/[^\w\s]/gi, '');
+                        params[1] = params[1].replace(/[0-9]*/g, '').replace(/[^\w\s]/gi, '');
                         break;
                     case "alphanumericOnly":
-                        value = value.replace(/[^\w\s]/gi, '');
+                        params[1] = params[1].replace(/[^\w\s]/gi, '');
                         break;
                     case "custom":
-                        value = value.replace(field.regex, '');
+                        params[1] = params[1].replace(field.regex, '');
                         break;
                 }
             }
-            resolve(value);
+            resolve(params[1]);
         });
     }
+
+    readonly setControlDisable = (formControlName: string) => {
+        this.FormGen.get(formControlName).disable({ onlySelf: true });
+    }
+
+    readonly setControlEnable = (formControlName: string) => {
+        this.FormGen.get(formControlName).enable({ onlySelf: true });
+    }
+
+    readonly setRequiredValidator = (formControlName: string) => {
+        this.FormGen.get(formControlName).clearValidators();
+        this.FormGen.get(formControlName).updateValueAndValidity({ onlySelf: true });
+        this.FormGen.get(formControlName).setValidators([Validators.required]);
+    }
+
+    readonly removeRequiredValidator = (formControlName: string) => {
+        this.FormGen.get(formControlName).clearValidators();
+        this.FormGen.get(formControlName).updateValueAndValidity({ onlySelf: true });
+    }
+
 }
 
 @Component({

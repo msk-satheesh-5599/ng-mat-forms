@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgMatFormsService } from './ng-mat-forms.service';
 import { fields } from './interfaces/fields.interface';
+import { Options } from './interfaces/options.interface';
 
 @Component({
     selector: 'ng-mat-forms',
@@ -16,7 +17,6 @@ import { fields } from './interfaces/fields.interface';
             align-items: center;
             height: 40px;
         }
-
         .example-margin {
             margin: 0 10px;
         }
@@ -25,8 +25,7 @@ import { fields } from './interfaces/fields.interface';
 export class NgMatFormsComponent implements OnInit, AfterViewInit {
 
     @Input() readonly Fields: fields[];
-    @Input() readonly Column: any;
-    FormGen: FormGroup;
+    @Input() readonly options: Options;
     @Output() readonly getFormValue: EventEmitter<any> = new EventEmitter();
     @Output() readonly onChange: EventEmitter<any> = new EventEmitter();
     @Output() readonly formChange: EventEmitter<any> = new EventEmitter();
@@ -37,7 +36,7 @@ export class NgMatFormsComponent implements OnInit, AfterViewInit {
 
     onResize(event): void {
         this.breakpoint = (event.target.innerWidth <= 400) ? 1 :
-            ((event.target.innerWidth <= 700) ? 2 : this.Column);
+            ((event.target.innerWidth <= 700) ? 2 : this.options.column);
     }
 
     ngOnInit() {
@@ -47,16 +46,16 @@ export class NgMatFormsComponent implements OnInit, AfterViewInit {
             this.formChange.emit(value);
         });
         this.breakpoint = (window.innerWidth <= 400) ? 1 :
-            ((window.innerWidth <= 700) ? 2 : this.Column);
-        this.submitArray = Array(3).fill(0);
+            ((window.innerWidth <= 700) ? 2 : this.options.column);
+        this.submitArray = Array(Number(this.options.column)).fill(0);
     }
 
     ngAfterViewInit() {
-        this.disableFields();
+
     }
 
     createForm(): FormGroup {
-        const job = new FormGroup({});
+        const job = new FormGroup({}, { validators: Validators.required });
         this.Fields.map(x => {
             let validators: any = x.validators;
             /* if (x.type === FieldType.CheckBox) {
@@ -65,6 +64,7 @@ export class NgMatFormsComponent implements OnInit, AfterViewInit {
                     job.addControl(x.formControlName, control);        
                 });
             } */
+
             job.addControl(x.formControlName, new FormControl(x.defaultValue, validators));
         });
         return job;
@@ -79,7 +79,8 @@ export class NgMatFormsComponent implements OnInit, AfterViewInit {
     }
 
     submit(): void {
-        this.getFormValue.emit(this.formService.FormGen.value);
+        this.validateAllFormFields(this.formService.FormGen);
+        this.getFormValue.emit({ formValue: this.formService.FormGen.getRawValue(), formStatus: this.formService.FormGen.valid });
     }
 
     trackByFormControlName(index: number, field: any): string {
@@ -91,18 +92,22 @@ export class NgMatFormsComponent implements OnInit, AfterViewInit {
             return {
                 required: `${fieldName} is required`,
                 minlength: `Minimun Length for ${fieldName} is 
-                    ${control.errors[error].requiredLength}`
+                    ${control.errors[error].requiredLength}`,
+                maxlength: `Maximum Length for ${fieldName} is 
+                    ${control.errors[error].requiredLength}`,
+                email: `Enter valid email for ${fieldName}`
             }[error];
         }
         return;
     }
 
-    disableFields(): void {
-        Object.keys(this.formService.FormGen.controls).map(control => {
-            let field = this.Fields.find(x => x.formControlName == control);
-            if (field.hasOwnProperty('disable')) {
-                if (field.disable)
-                    this.formService.FormGen.get(control).disable({ onlySelf: true });
+    validateAllFormFields(form: FormGroup): void {
+        Object.keys(form.controls).map((x) => {
+            let control = form.get(x);
+            if (control instanceof FormControl) {
+                control.markAsTouched({ onlySelf: true });
+            } else if (control instanceof FormGroup) {
+                this.validateAllFormFields(control);
             }
         });
     }
