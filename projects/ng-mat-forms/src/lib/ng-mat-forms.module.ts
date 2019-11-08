@@ -5,6 +5,7 @@ import { AlphabetOnlyDirective } from './directives/alphabetOnly.directive';
 import { AlphaNumericOnlyDirective } from './directives/alphanumericOnly.directive';
 import { customDirective } from './directives/custom.directive';
 import { NumberOnlyDirective } from './directives/numericOnly.directive';
+import { DisableFieldDirective } from './directives/disable-field.directive';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
     MatInputModule,
@@ -26,7 +27,8 @@ import { CommonModule } from '@angular/common';
         NumberOnlyDirective,
         AlphabetOnlyDirective,
         AlphaNumericOnlyDirective,
-        customDirective
+        customDirective,
+        DisableFieldDirective
     ],
     imports: [
         CommonModule,
