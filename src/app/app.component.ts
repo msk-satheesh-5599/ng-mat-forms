@@ -26,11 +26,27 @@ export class AppComponent implements AfterViewInit {
         list: [
             {
                 name: 'Infinity War',
-                value: 'Avengers'
+                value: 'Avengers',
+                type: 'option'
             },
             {
                 name: 'End Game',
-                value: 'Avengers'
+                value: 'Avengers',
+                type: 'option'
+            },
+            {
+                name: 'Baba-BlackSheep',
+                value: [{
+                    name: 'Infinity War',
+                    value: 'Avengers',
+                    type: 'option'
+                },
+                {
+                    name: 'End Game',
+                    value: 'Avengers',
+                    type: 'option'
+                }],
+                type: 'optionGroup'
             }
         ],
         validators: [Validators.required]
@@ -72,7 +88,8 @@ export class AppComponent implements AfterViewInit {
 
     option: NgMatFormOptions = {
         column: 3,
-        errorMsgOnSubmit: true
+        errorMsgOnSubmit: true,
+        floatLabel: 'never'
     };
 
     constructor(private service: NgMatFormsService) { }

@@ -6,10 +6,10 @@ export interface NgMatFormOptions {
 
     readonly errorMsgOnSubmit?: boolean
 
-    readonly apperance?: MatFormFieldAppearance;
+    apperance?: MatFormFieldAppearance;
 
-    readonly color?: ThemePalette;
+    color?: ThemePalette;
 
-    readonly floatLabel?: FloatLabelType
+    floatLabel?: FloatLabelType
 
 }

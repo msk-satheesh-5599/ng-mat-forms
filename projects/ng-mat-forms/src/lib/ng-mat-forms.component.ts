@@ -26,7 +26,12 @@ import { NgMatFormErrorStateMatcher } from './NgMatFormErrorStateMatcher.class';
 export class NgMatFormsComponent implements OnInit {
 
     @Input() readonly Fields: fields[];
-    @Input() readonly options: NgMatFormOptions;
+    @Input() readonly options: NgMatFormOptions = {
+        column: 3,
+        apperance: 'legacy',
+        color: 'primary',
+        floatLabel: 'auto'
+    };
     @Output() readonly getFormValue: EventEmitter<any> = new EventEmitter();
     @Output() readonly onChange: EventEmitter<any> = new EventEmitter();
     @Output() readonly formChange: EventEmitter<any> = new EventEmitter();
@@ -105,6 +110,12 @@ export class NgMatFormsComponent implements OnInit {
             }
         });
     }
+
+    /* setOptionsByDefault() {
+        this.options.hasOwnProperty('apperance') ? '' : this.options['apperance'] = 'legacy';
+        this.options.hasOwnProperty('color') ? '' : this.options['color'] = 'primary';
+        this.options.hasOwnProperty('floatLabel') ? '' : this.options['floatLabel'] = 'auto';
+    } */
 
 }
 
