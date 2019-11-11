@@ -2,7 +2,7 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { NgMatFormsService } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.service';
 import { Validators } from '@angular/forms';
 import { fields } from './../../projects/ng-mat-forms/src/lib/interfaces/fields.interface';
-import { Options } from './../../projects/ng-mat-forms/src/lib/interfaces/options.interface';
+import { NgMatFormOptions } from '../../projects/ng-mat-forms/src/lib/interfaces/ng-mat-form-options.interface';
 
 @Component({
     selector: 'app-root',
@@ -32,7 +32,8 @@ export class AppComponent implements AfterViewInit {
                 name: 'End Game',
                 value: 'Avengers'
             }
-        ]
+        ],
+        validators: [Validators.required]
     }, {
         type: 'radio',
         label: 'Confirm Password',
@@ -69,7 +70,7 @@ export class AppComponent implements AfterViewInit {
         minDate: new Date('2019-01-01')
     }];
 
-    option: Options = {
+    option: NgMatFormOptions = {
         column: 3,
         errorMsgOnSubmit: true
     };

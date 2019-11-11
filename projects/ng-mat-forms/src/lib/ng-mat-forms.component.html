@@ -1,16 +1,16 @@
 <ng-container *ngIf="Fields.length > 0; then thenTemplate; else elseTemplate"></ng-container>
 <ng-template #thenTemplate>
     <mat-grid-list responsive='true' [cols]="breakpoint" rowHeight="100px" (window:resize)="onResize($event)">
-        <form [formGroup]='formService.FormGen'>
+        <form [formGroup]='formService.FormGen' (ngSubmit)='click()'>
             <mat-grid-tile *ngFor='let x of Fields;trackBy:trackByFormControlName;'>
                 <div *ngIf='x.type == "input"'>
-                    <mat-form-field >
+                    <mat-form-field appearance="legacy" color="primary" floatLabel='auto'>
                         <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true'>{{ x.label }}</mat-label>
                         <input matInput [placeholder]="x.placeholder" [formControlName]='x.formControlName'
-                            (change)='valueChange(x.formControlName, $event)' [numbersOnly]='x.directive == "numeric"'
+                            (change)='valueChange(x.formControlName, $event)' [errorStateMatcher]="matcher" [numbersOnly]='x.directive == "numeric"'
                             [alphabetOnly]='x.directive == "alpha"' [alphanumericOnly]='x.directive == "alphanumeric"'
                             [customRegex]='x.directive == "custom"' [regExp]='x.hasOwnProperty("reGex") ? x.reGex : ""'
-                            [disableField]='x.hasOwnProperty("disable") ? x.disable : false' [errorStateMatcher]="matcher">
+                            [disableField]='x.hasOwnProperty("disable") ? x.disable : false' >
                         <mat-error
                             *ngIf='formSubmit && (formService.FormGen.get(x.formControlName).invalid && formService.FormGen.get(x.formControlName).touched)'>
                             {{getErrorMessage(formService.FormGen.get(x.formControlName), x.label)}}</mat-error>
@@ -20,7 +20,7 @@
                     <mat-form-field>
                         <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true'>{{ x.label }}</mat-label>
                         <mat-select (selectionChange)='valueChange(x.formControlName, $event)'
-                            [formControlName]='x.formControlName' [multiple]='x.type == "multiSelect"'>
+                            [formControlName]='x.formControlName' [multiple]='x.type == "multiSelect"' [errorStateMatcher]="matcher">
                             <mat-option *ngFor="let sl of x.list" [value]="sl.value">
                                 {{ sl.name }}
                             </mat-option>
@@ -32,7 +32,7 @@
                 </div>
                 <div *ngIf='x.type == "radio"'>
                     <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true'>{{ x.label }}</mat-label>
-                    <section class="example-section">
+                    <section class="example-section" >
                         <mat-radio-group aria-label="x.label" [formControlName]='x.formControlName'>
                             <mat-radio-button *ngFor="let item of x.list" [value]='item.value'>{{ item.name }}
                             </mat-radio-button>
@@ -58,7 +58,7 @@
                     <mat-form-field>
                         <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true'>{{ x.label }}</mat-label>
                         <input matInput [matDatepicker]="picker" [min]='x.minDate' [max]='x.maxDate'
-                            [placeholder]="x.placeholder" [formControlName]='x.formControlName'>
+                            [placeholder]="x.placeholder" [formControlName]='x.formControlName' [errorStateMatcher]="matcher">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -69,7 +69,7 @@
                 <div *ngIf='x.type == "autoComplete"'>
                     <mat-form-field class="example-full-width">
                         <input matInput [placeholder]="x.placeholder" aria-label="x.label" [matAutocomplete]="auto"
-                            [formControl]="x.formControlName">
+                            [formControl]="x.formControlName" >
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let state of x.list | async" [value]="item.value">
                                 <span>{{item.name}}</span>
@@ -86,7 +86,7 @@
     <mat-grid-list [cols]="breakpoint" rowHeight="50px">
         <mat-grid-tile *ngFor="let item of submitArray;let i = index;">
             <div>
-                <button *ngIf="(i+1) == submitArray.length" mat-raised-button (click)='submit()'>Submit</button>
+                <button *ngIf="(i+1) == submitArray.length" mat-raised-button (click)='submit()' >Submit</button>
             </div>
         </mat-grid-tile>
     </mat-grid-list>

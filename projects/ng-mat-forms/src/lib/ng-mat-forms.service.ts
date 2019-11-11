@@ -1,6 +1,7 @@
 import { Injectable, Input, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { fields } from './interfaces/fields.interface';
+import { resolve } from 'q';
 
 export type formValue = {
     [key: string]: string
@@ -18,13 +19,13 @@ export class NgMatFormsService {
         this.replaceValue(formControlName, value).then((val) => {
             this.FormGen.patchValue({ [formControlName]: val });
         });
-    }
+    };
 
     readonly patchValue: any = (obj: formValue) => {
         Object.keys(obj).map(x => {
             this.setValue(x, obj[x]);
         });
-    }
+    };
 
     readonly replaceValue = (...params) => {
         return new Promise((resolve) => {
@@ -47,26 +48,26 @@ export class NgMatFormsService {
             }
             resolve(params[1]);
         });
-    }
+    };
 
     readonly setControlDisable = (formControlName: string) => {
         this.FormGen.get(formControlName).disable({ onlySelf: true });
-    }
+    };
 
     readonly setControlEnable = (formControlName: string) => {
         this.FormGen.get(formControlName).enable({ onlySelf: true });
-    }
+    };
 
     readonly setRequiredValidator = (formControlName: string) => {
         this.FormGen.get(formControlName).clearValidators();
         this.FormGen.get(formControlName).updateValueAndValidity({ onlySelf: true });
         this.FormGen.get(formControlName).setValidators([Validators.required]);
-    }
+    };
 
     readonly removeRequiredValidator = (formControlName: string) => {
         this.FormGen.get(formControlName).clearValidators();
         this.FormGen.get(formControlName).updateValueAndValidity({ onlySelf: true });
-    }
+    };
 
 }
 
