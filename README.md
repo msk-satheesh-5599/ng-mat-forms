@@ -1,16 +1,15 @@
 # ng-mat-forms
 
----
 ## Description
 
   Highly configurable Angular Dynamic Form Generator With Material. Compatible Angular2+.
   
----
 ## Installation
 
   To install this component to an external project, follow the procedure:
-    * ### npm install ng-mat-forms --save
-    * Add NgMatFormsModule import to your @NgModule like example below
+  
+    1. ### npm install ng-mat-forms --save
+    2. Add NgMatFormsModule import to your @NgModule like example below
     
     ```typescript
     import { NgModule } from '@angular/core';
