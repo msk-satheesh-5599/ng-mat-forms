@@ -25,7 +25,7 @@
   })
   export class MyTestAppModule {}
   ```
-  3. If you are using __systemjs__ package loader add the following __ng-mat-forms__ properties to the System.config:
+  3. If you are using __systemjs__ package loader add the following ng-mat-forms properties to the __System.config__:
   
   ```javascript
  (function (global) {
