@@ -14,11 +14,12 @@
   ```javascript
   import { NgModule } from '@angular/core';
   import { BrowserModule } from '@angular/platform-browser';
+  import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   import { MyTestApp } from './my-test-app';
   import { NgMatFormsModule } from 'ng-mat-forms';
 
   @NgModule({
-    imports:      [ BrowserModule, NgMatFormsModule ],
+    imports:      [ BrowserModule, BrowserAnimationsModule, NgMatFormsModule ],
     declarations: [ MyTestApp ],
     bootstrap:    [ MyTestApp ]
   })
