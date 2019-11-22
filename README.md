@@ -9,8 +9,8 @@
 ## Installation
 
   To install this component to an external project, follow the procedure:
-    1. npm install ng-mat-forms --save
-    2. Add NgMatFormsModule import to your @NgModule like example below
+    * ### npm install ng-mat-forms --save
+    * Add NgMatFormsModule import to your @NgModule like example below
     
     ```typescript
     import { NgModule } from '@angular/core';
