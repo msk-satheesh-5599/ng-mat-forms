@@ -11,7 +11,7 @@
     1. ### npm install ng-mat-forms --save
     2. Add NgMatFormsModule import to your @NgModule like example below
     
-    ```typescript
+    ```javascript
     import { NgModule } from '@angular/core';
     import { BrowserModule } from '@angular/platform-browser';
     import { MyTestApp } from './my-test-app';
