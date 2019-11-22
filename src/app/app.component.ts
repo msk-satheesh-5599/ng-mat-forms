@@ -3,6 +3,7 @@ import { NgMatFormsService } from './../../projects/ng-mat-forms/src/lib/ng-mat-
 import { Validators } from '@angular/forms';
 import { fields } from './../../projects/ng-mat-forms/src/lib/interfaces/fields.interface';
 import { NgMatFormOptions } from '../../projects/ng-mat-forms/src/lib/interfaces/ng-mat-form-options.interface';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -109,6 +110,12 @@ export class AppComponent implements AfterViewInit {
 
     valueChanges(form) {
         console.log(form);
+    }
+
+    getFormAll(form: Observable<any>) {
+        form.subscribe((value) => {
+            console.log(value);
+        });
     }
 
 }

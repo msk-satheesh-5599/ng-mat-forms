@@ -1,2 +1,3 @@
-<ng-mat-forms #temp [Fields]='Fields' [options]='option' (getFormValue)='getForm($event)' (onChange)='valueChanges($event)'>
+<ng-mat-forms #temp [Fields]='Fields' [options]='option' (getFormValue)='getForm($event)' 
+(onChange)='valueChanges($event)' (formChange)="getFormAll($event)">
 </ng-mat-forms>

@@ -4,6 +4,7 @@ import { NgMatFormsService } from './ng-mat-forms.service';
 import { fields } from './interfaces/fields.interface';
 import { NgMatFormOptions } from './interfaces/ng-mat-form-options.interface';
 import { NgMatFormErrorStateMatcher } from './NgMatFormErrorStateMatcher.class';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'ng-mat-forms',
@@ -34,7 +35,7 @@ export class NgMatFormsComponent implements OnInit {
     };
     @Output() readonly getFormValue: EventEmitter<any> = new EventEmitter();
     @Output() readonly onChange: EventEmitter<any> = new EventEmitter();
-    @Output() readonly formChange: EventEmitter<any> = new EventEmitter();
+    @Output() readonly formChange: EventEmitter<Observable<any>> = new EventEmitter();
     breakpoint: Number;
     submitArray: Array<Number>;
     formSubmit: boolean;
@@ -53,7 +54,7 @@ export class NgMatFormsComponent implements OnInit {
         this.formService.Fields = this.Fields;
         this.formSubmit = ('errorMsgOnSubmit' in this.options) ? ((this.options.errorMsgOnSubmit) ? false : true) : true;
         this.matcher.setupdateOnSubmit('options', this.formSubmit);
-        this.formService.FormGen.valueChanges.subscribe(value => { this.formChange.emit(value); });
+        this.formChange.emit(this.formService.FormGen.valueChanges);
         this.breakpoint = (window.innerWidth <= 400) ? 1 : ((window.innerWidth <= 700) ? 2 : this.options.column);
         this.submitArray = Array(Number(this.options.column)).fill(0);
     }
