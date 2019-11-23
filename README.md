@@ -2,7 +2,7 @@
 
 ## Description
 
-    Highly configurable Angular Dynamic Form Generator With Angular Material. Compatible Angular2+.
+Highly configurable Angular Dynamic Form Generator With Angular Material. Compatible Angular2+.
   
 ## Installation
 
@@ -105,7 +105,30 @@ Value of the options attribute is a type of __NgMatFormOptions__. It can contain
 | ------ |:-------:|-----:|:------------|
 | column |    3    |  number | To intialize the column count of the fields with in the row. |
 |errorMsgOnSubmit| false | boolean | To determine weather error messages of the fields need to show on field change or only on form submit|
-|floatLabel| 
-  
+|floatLabel| auto | FloatLabelType | float label configuration |
+|color | primary | ThemePalette | color of the form field|
+| apperance | legacy | MatFormFieldAppearance | apperance of the form field|
 
+__field attribute__
 
+Value of the options attribute is a type of __NgMatFormField__. It can contain the following properties.
+
+Note: `*mandatory`
+
+| option | Default | Type | Description |
+| ------ |:-------:|-----:|:------------|
+|type| - | fieldType | type of the form field. it's a type of fieldType. types available `'input' | 'select' | 'radio' | 'multiSelect'| 'checkBox'| 'datePicker'| 'autoComplete'` | 
+| label | - | string | label of the form field|
+|placeholder | - | string | placeholder of the form field |
+|formControlName | - | string | formcontrolname for the form field |
+|directive | - | directive | to determine the behaviour of the field . directives available are `'alphabetOnly' | 'alphanumericOnly' | 'numericOnly' | 'custom'`|
+| regex | - | RegExp | if the directive is custom this regex is the behaviour of the form field|
+|defaultValue| - | string or number | to set initial value for the form field |
+| validators | - | Validators | validators for the form field. it extends angular build in validators|
+|list | - | selectlist[] | if the field type is `select` then this list is the options of the field.|
+|labelShow| - | boolean | display the label or not | 
+|minDate| - | Date | for disable the datepicker since the date|
+| maxDate | - | Date | for disable the datepicker untill the date|
+|disable| - | boolean | for disable the field | 
+
+## Apis
