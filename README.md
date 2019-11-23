@@ -119,7 +119,7 @@ Note: `*mandatory`
 
 | option | Default | Type | Description |
 | ------ |:-------:|:-----:|:------------|
-|type*| - | fieldType | type of the form field. it's a type of fieldType. types available `'input' | 'select' | 'radio' | 'multiSelect'| 'checkBox'| 'datePicker'| 'autoComplete'` | 
+|type*| - | fieldType | type of the form field. it's a type of fieldType. types available `'input' , 'select' , 'radio' , 'multiSelect', 'checkBox', 'datePicker', 'autoComplete'` | 
 | label* | - | string | label of the form field|
 |placeholder* | - | string | placeholder of the form field |
 |formControlName* | - | string | formcontrolname for the form field |
