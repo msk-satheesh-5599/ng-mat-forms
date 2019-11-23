@@ -123,7 +123,7 @@ Note: `*mandatory`
 | label* | - | string | label of the form field|
 |placeholder* | - | string | placeholder of the form field |
 |formControlName* | - | string | formcontrolname for the form field |
-|directive | - | directive | to determine the behaviour of the field . directives available are `'alphabetOnly' | 'alphanumericOnly' | 'numericOnly' | 'custom'`|
+|directive | - | directive | to determine the behaviour of the field . directives available are `'alphabetOnly' , 'alphanumericOnly' , 'numericOnly' , 'custom'`|
 | regex | - | RegExp | if the directive is custom this regex is the behaviour of the form field|
 |defaultValue| - | string or number | to set initial value for the form field |
 | validators | - | Validators | validators for the form field. it extends angular build in validators|
@@ -132,5 +132,25 @@ Note: `*mandatory`
 |minDate| - | Date | for disable the datepicker since the date|
 | maxDate | - | Date | for disable the datepicker untill the date|
 |disable| - | boolean | for disable the field | 
+### formChange callback
 
-## Apis
+* called when any of the form field changes
+  * event parameter:
+    * event: observable
+  * event parameter type is __observable__
+  * it is formGroup __valueChanges__ event it gives the value changed value of the form.
+
+ #### Example of the formChange callback:
+  
+  ```js
+  onformChanged(event: Observable<any>) {
+      let formChange:Observable<any> = event;
+      formChange.subscribe((value) => {
+          console.log(value);
+      });
+  }
+  ```
+  template snippet: 
+  ```html
+  <ng-mat-forms [Fields]='ngMatFormFields' [options]='ngMatFormsOptions' (formChange)="onformChanged($event)"></ng-mat-forms>
+  ```
