@@ -101,9 +101,11 @@ __options attribute__
 
 Value of the options attribute is a type of __NgMatFormOptions__. It can contain the following properties.
 
+Note: `*mandatory`
+
 | option | Default | Type | Description |
-| ------ |:-------:|-----:|:------------|
-| column |    3    |  number | To intialize the column count of the fields with in the row. |
+| ------ |:-------:|:-----:|:------------|
+| column* |    3    |  number | To intialize the column count of the fields with in the row. |
 |errorMsgOnSubmit| false | boolean | To determine weather error messages of the fields need to show on field change or only on form submit|
 |floatLabel| auto | FloatLabelType | float label configuration |
 |color | primary | ThemePalette | color of the form field|
@@ -116,11 +118,11 @@ Value of the options attribute is a type of __NgMatFormField__. It can contain t
 Note: `*mandatory`
 
 | option | Default | Type | Description |
-| ------ |:-------:|-----:|:------------|
-|type| - | fieldType | type of the form field. it's a type of fieldType. types available `'input' | 'select' | 'radio' | 'multiSelect'| 'checkBox'| 'datePicker'| 'autoComplete'` | 
-| label | - | string | label of the form field|
-|placeholder | - | string | placeholder of the form field |
-|formControlName | - | string | formcontrolname for the form field |
+| ------ |:-------:|:-----:|:------------|
+|type*| - | fieldType | type of the form field. it's a type of fieldType. types available `'input' | 'select' | 'radio' | 'multiSelect'| 'checkBox'| 'datePicker'| 'autoComplete'` | 
+| label* | - | string | label of the form field|
+|placeholder* | - | string | placeholder of the form field |
+|formControlName* | - | string | formcontrolname for the form field |
 |directive | - | directive | to determine the behaviour of the field . directives available are `'alphabetOnly' | 'alphanumericOnly' | 'numericOnly' | 'custom'`|
 | regex | - | RegExp | if the directive is custom this regex is the behaviour of the form field|
 |defaultValue| - | string or number | to set initial value for the form field |
