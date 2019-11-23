@@ -146,11 +146,13 @@ Note: `*mandatory`
   onformChanged(event: Observable<any>) {
       let formChange:Observable<any> = event;
       formChange.subscribe((value) => {
+          //Other operations here...
           console.log(value);
       });
   }
   ```
   template snippet: 
   ```html
-  <ng-mat-forms [Fields]='ngMatFormFields' [options]='ngMatFormsOptions' (formChange)="onformChanged($event)"></ng-mat-forms>
+  <ng-mat-forms [Fields]='ngMatFormFields' [options]='ngMatFormsOptions' 
+                (formChange)="onformChanged($event)"></ng-mat-forms>
   ```
