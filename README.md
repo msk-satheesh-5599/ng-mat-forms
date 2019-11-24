@@ -158,18 +158,18 @@ Note: `*mandatory`
                 (formChange)="onformChanged($event)"></ng-mat-forms>
   ```
   
-### submitForm callback
+### formSubmit callback
 
-* called when any of the form submits
+* called when the form submits
   * event parameter:
     * event.formValue: value of the form
     * event.formStatus: status of the value 
-  * event parameter type is __object__
+  * event parameter type is __NgMatFormSubmitModal__
 
-#### Example of the submitForm callback:
+#### Example of the submitForm formSubmit:
   
 ```js
-onformSubmit(event: any) {
+onformSubmit(event: NgMatFormSubmitModal) {
   //Other operations here...
   console.log({formValue: event.formValue,formStatus: event.formStatus});
 }
@@ -178,6 +178,28 @@ template snippet:
 ```html
 <ng-mat-forms [Fields]='ngMatFormFields' [options]='ngMatFormsOptions' 
               (formSubmit)="onformSubmit($event)"></ng-mat-forms>
+```
+### formFieldsChange callback
+
+* called when any of the form field changes
+  * event parameter:
+    * event.controlName: formControlName of the value changed field
+    * event.value: value of the field
+    * event.event: field change event
+  * event parameter type is __NgMatFormFieldChangeModal__
+
+#### Example of the formFieldsChange callback:
+  
+```js
+onformFieldsChange(event: NgMatFormFieldChangeModal) {
+  //Other operations here...
+  console.log({formValue: event.formValue,formStatus: event.formStatus});
+}
+```
+template snippet: 
+```html
+<ng-mat-forms [Fields]='ngMatFormFields' [options]='ngMatFormsOptions' 
+              (formFieldsChange)="onformFieldsChange($event)"></ng-mat-forms>
 ```
   
   
