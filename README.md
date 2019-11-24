@@ -132,6 +132,7 @@ Note: `*mandatory`
 |minDate| - | Date | for disable the datepicker since the date|
 | maxDate | - | Date | for disable the datepicker untill the date|
 |disable| - | boolean | for disable the field | 
+
 ### formChange callback
 
 * called when any of the form field changes
@@ -156,3 +157,27 @@ Note: `*mandatory`
   <ng-mat-forms [Fields]='ngMatFormFields' [options]='ngMatFormsOptions' 
                 (formChange)="onformChanged($event)"></ng-mat-forms>
   ```
+  
+### submitForm callback
+
+* called when any of the form submits
+  * event parameter:
+    * event.formValue: value of the form
+    * event.formStatus: status of the value 
+  * event parameter type is __object__
+
+#### Example of the submitForm callback:
+  
+```js
+onformSubmit(event: any) {
+  //Other operations here...
+  console.log({formValue: event.formValue,formStatus: event.formStatus});
+}
+```
+template snippet: 
+```html
+<ng-mat-forms [Fields]='ngMatFormFields' [options]='ngMatFormsOptions' 
+              (formSubmit)="onformSubmit($event)"></ng-mat-forms>
+```
+  
+  
