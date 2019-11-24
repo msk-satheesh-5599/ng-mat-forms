@@ -241,3 +241,190 @@ export class MyTestApp {
     constructor(private ngMatFormService:NgMatFormService) {}
 }
 ```
+### setFormValue
+
+__description__
+* set an value for the the formGroup
+* parameters   
+  * form value object contains formControlName as key and value
+    * example: { name: 'msk' }
+    
+__example__
+```javascript
+import { NgMatFormOptions, NgMatFormFields, NgMatFormService } from 'ng-mat-forms';
+// other imports here...
+
+export class MyTestApp {
+
+    public ngMatFormsOptions: NgMatFormOptions = {
+        column: 3
+        // other options...
+    };
+
+    // Initialized a field list array which extended a field interface.
+    public ngMatFormFields: NgMatFormFields[] = [{
+        type: 'input',
+        label: 'User Name',
+        placeholder: 'Enter a User Name',
+        formControlName: 'name'
+        // other options...
+    }];
+    
+    setValue(): void {
+        //this.ngMatFormService.setFormValue({ [formControlName]: 'msk' });
+        this.ngMatFormService.setFormValue({ name: 'msk' });
+    }
+
+    constructor(private ngMatFormService:NgMatFormService) {}
+}
+```
+
+### setControlDisable
+
+__description__
+* disable the formcontrol
+* parameters   
+  * formControlName
+    
+__example__
+```javascript
+import { NgMatFormOptions, NgMatFormFields, NgMatFormService } from 'ng-mat-forms';
+// other imports here...
+
+export class MyTestApp {
+
+    public ngMatFormsOptions: NgMatFormOptions = {
+        column: 3
+        // other options...
+    };
+
+    // Initialized a field list array which extended a field interface.
+    public ngMatFormFields: NgMatFormFields[] = [{
+        type: 'input',
+        label: 'User Name',
+        placeholder: 'Enter a User Name',
+        formControlName: 'name'
+        // other options...
+    }];
+    
+    setDisable(): void {
+        //this.ngMatFormService.setControlDisable(formControlName);
+        this.ngMatFormService.setControlDisable('name');
+    }
+
+    constructor(private ngMatFormService:NgMatFormService) {}
+}
+```
+
+### setControlEnable
+
+__description__
+* enable the formcontrol
+* parameters   
+  * formControlName
+    
+__example__
+```javascript
+import { NgMatFormOptions, NgMatFormFields, NgMatFormService } from 'ng-mat-forms';
+// other imports here...
+
+export class MyTestApp {
+
+    public ngMatFormsOptions: NgMatFormOptions = {
+        column: 3
+        // other options...
+    };
+
+    // Initialized a field list array which extended a field interface.
+    public ngMatFormFields: NgMatFormFields[] = [{
+        type: 'input',
+        label: 'User Name',
+        placeholder: 'Enter a User Name',
+        formControlName: 'name'
+        // other options...
+    }];
+    
+    setDisable(): void {
+        //this.ngMatFormService.setControlEnable(formControlName);
+        this.ngMatFormService.setControlEnable('name');
+    }
+
+    constructor(private ngMatFormService:NgMatFormService) {}
+}
+```
+
+### setValidator
+
+__description__
+* make the field as required with angular validators
+* parameters   
+  * formControlName
+  * validators
+    
+__example__
+```javascript
+import { NgMatFormOptions, NgMatFormFields, NgMatFormService } from 'ng-mat-forms';
+
+// other imports here...
+
+export class MyTestApp {
+
+    public ngMatFormsOptions: NgMatFormOptions = {
+        column: 3
+        // other options...
+    };
+
+    // Initialized a field list array which extended a field interface.
+    public ngMatFormFields: NgMatFormFields[] = [{
+        type: 'input',
+        label: 'User Name',
+        placeholder: 'Enter a User Name',
+        formControlName: 'name'
+        // other options...
+    }];
+    
+    setValidator(): void {
+        //this.ngMatFormService.setValidator(formControlName, validators);
+        this.ngMatFormService.setValidator('name', [Validators.required]);
+    }
+
+    constructor(private ngMatFormService:NgMatFormService) {}
+}
+```
+
+### removeValidator
+
+__description__
+* make the field as non-required
+* parameters   
+  * formControlName
+    
+__example__
+```javascript
+import { NgMatFormOptions, NgMatFormFields, NgMatFormService } from 'ng-mat-forms';
+// other imports here...
+
+export class MyTestApp {
+
+    public ngMatFormsOptions: NgMatFormOptions = {
+        column: 3
+        // other options...
+    };
+
+    // Initialized a field list array which extended a field interface.
+    public ngMatFormFields: NgMatFormFields[] = [{
+        type: 'input',
+        label: 'User Name',
+        placeholder: 'Enter a User Name',
+        formControlName: 'name'
+        // other options...
+    }];
+    
+    removeValidator(): void {
+        //this.ngMatFormService.removeValidator(formControlName);
+        this.ngMatFormService.removeValidator('name');
+    }
+
+    constructor(private ngMatFormService:NgMatFormService) {}
+}
+```
