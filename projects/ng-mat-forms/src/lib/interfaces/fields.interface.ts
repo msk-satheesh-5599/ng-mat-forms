@@ -18,7 +18,7 @@ export type fieldType = 'input' | 'select' | 'radio' | 'multiSelect' | 'checkBox
  */
 export type directive = 'alphabetOnly' | 'alphanumericOnly' | 'numericOnly' | 'custom';
 
-export interface fields {
+export interface NgMatFormFields {
     /**
      * @description
      * It's an variable to determine the type of the field.It's an part of the FieldType.

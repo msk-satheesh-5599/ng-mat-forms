@@ -1,7 +1,6 @@
 import { Injectable, Input, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { fields } from './interfaces/fields.interface';
-import { resolve } from 'q';
+import { NgMatFormFields } from './interfaces/fields.interface';
 
 export type formValue = {
     [key: string]: string
@@ -12,18 +11,18 @@ export type formValue = {
 })
 export class NgMatFormsService {
     FormGen: FormGroup;
-    Fields: fields[];
+    Fields: NgMatFormFields[];
     constructor() { }
 
-    readonly setValue: any = (formControlName: string, value: any) => {
+    readonly setControlValue: any = (formControlName: string, value: any) => {
         this.replaceValue(formControlName, value).then((val) => {
             this.FormGen.patchValue({ [formControlName]: val });
         });
     };
 
-    readonly patchValue: any = (obj: formValue) => {
+    readonly setFormValue: any = (obj: formValue) => {
         Object.keys(obj).map(x => {
-            this.setValue(x, obj[x]);
+            this.setControlValue(x, obj[x]);
         });
     };
 
@@ -58,13 +57,13 @@ export class NgMatFormsService {
         this.FormGen.get(formControlName).enable({ onlySelf: true });
     };
 
-    readonly setRequiredValidator = (formControlName: string) => {
+    readonly setValidator = (formControlName: string, validators: any) => {
         this.FormGen.get(formControlName).clearValidators();
         this.FormGen.get(formControlName).updateValueAndValidity({ onlySelf: true });
-        this.FormGen.get(formControlName).setValidators([Validators.required]);
+        this.FormGen.get(formControlName).setValidators(validators);
     };
 
-    readonly removeRequiredValidator = (formControlName: string) => {
+    readonly removeValidator = (formControlName: string) => {
         this.FormGen.get(formControlName).clearValidators();
         this.FormGen.get(formControlName).updateValueAndValidity({ onlySelf: true });
     };

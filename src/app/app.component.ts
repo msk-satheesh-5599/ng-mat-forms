@@ -1,7 +1,9 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { NgMatFormsService } from './../../projects/ng-mat-forms/src/lib/ng-mat-forms.service';
 import { Validators } from '@angular/forms';
-import { fields } from './../../projects/ng-mat-forms/src/lib/interfaces/fields.interface';
+import { NgMatFormFields } from './../../projects/ng-mat-forms/src/lib/interfaces/fields.interface';
+import { NgMatFormFieldChangeModal } from './../../projects/ng-mat-forms/src/lib/interfaces/formFieldChangeModal.interface';
+import { NgMatFormSubmitModal } from './../../projects/ng-mat-forms/src/lib/interfaces/formSubmitModel.interface';
 import { NgMatFormOptions } from '../../projects/ng-mat-forms/src/lib/interfaces/ng-mat-form-options.interface';
 import { Observable } from 'rxjs';
 
@@ -12,7 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements AfterViewInit {
 
-    Fields: fields[] = [{
+    Fields: NgMatFormFields[] = [{
         type: 'input',
         label: 'User Name',
         placeholder: 'Enter a User Name',
@@ -97,18 +99,18 @@ export class AppComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         setTimeout(() => {
-            this.service.setValue('name', 'msk');
+            this.service.setControlValue('name', 'msk');
             /* this.service.setControlDisable('name'); */
         }, 1000);
     }
 
 
 
-    getForm(form) {
-        console.log(form);
+    getForm(form: NgMatFormSubmitModal) {
+        console.log(form.formValue);
     }
 
-    valueChanges(form) {
+    valueChanges(form: NgMatFormFieldChangeModal) {
         console.log(form);
     }
 

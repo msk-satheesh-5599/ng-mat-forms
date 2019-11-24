@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgMatFormsService } from './ng-mat-forms.service';
-import { fields } from './interfaces/fields.interface';
+import { NgMatFormFields } from './interfaces/fields.interface';
 import { NgMatFormOptions } from './interfaces/ng-mat-form-options.interface';
+import { NgMatFormFieldChangeModal } from './interfaces/formFieldChangeModal.interface';
 import { NgMatFormErrorStateMatcher } from './NgMatFormErrorStateMatcher.class';
 import { Observable } from 'rxjs';
 
@@ -26,19 +27,19 @@ import { Observable } from 'rxjs';
 })
 export class NgMatFormsComponent implements OnInit {
 
-    @Input() readonly Fields: fields[];
+    @Input() readonly Fields: NgMatFormFields[];
     @Input() readonly options: NgMatFormOptions = {
         column: 3,
         apperance: 'legacy',
         color: 'primary',
         floatLabel: 'auto'
     };
-    @Output() readonly getFormValue: EventEmitter<any> = new EventEmitter();
-    @Output() readonly onChange: EventEmitter<any> = new EventEmitter();
+    @Output() readonly formSubmit: EventEmitter<any> = new EventEmitter();
+    @Output() readonly formFieldsChange: EventEmitter<any> = new EventEmitter();
     @Output() readonly formChange: EventEmitter<Observable<any>> = new EventEmitter();
     breakpoint: Number;
     submitArray: Array<Number>;
-    formSubmit: boolean;
+    formSubmitFlag: boolean;
     matcher = new NgMatFormErrorStateMatcher();
 
     constructor(private formService: NgMatFormsService) { }
@@ -52,8 +53,8 @@ export class NgMatFormsComponent implements OnInit {
     ngOnInit() {
         this.formService.FormGen = this.createForm();
         this.formService.Fields = this.Fields;
-        this.formSubmit = ('errorMsgOnSubmit' in this.options) ? ((this.options.errorMsgOnSubmit) ? false : true) : true;
-        this.matcher.setupdateOnSubmit('options', this.formSubmit);
+        this.formSubmitFlag = ('errorMsgOnSubmit' in this.options) ? ((this.options.errorMsgOnSubmit) ? false : true) : true;
+        this.matcher.setupdateOnSubmit('options', this.formSubmitFlag);
         this.formChange.emit(this.formService.FormGen.valueChanges);
         this.breakpoint = (window.innerWidth <= 400) ? 1 : ((window.innerWidth <= 700) ? 2 : this.options.column);
         this.submitArray = Array(Number(this.options.column)).fill(0);
@@ -69,18 +70,19 @@ export class NgMatFormsComponent implements OnInit {
     }
 
     valueChange(formControlName: string, event: any): void {
-        this.onChange.emit({
+        const emitObj: NgMatFormFieldChangeModal = {
             controlName: formControlName,
             value: this.formService.FormGen.get(formControlName).value,
             event: event
-        });
+        };
+        this.formFieldsChange.emit(emitObj);
     }
 
     submit(): void {
         this.matcher.setupdateOnSubmit('formSubmit', true);
-        (this.formSubmit) ? '' : this.formSubmit = true;
+        (this.formSubmitFlag) ? '' : this.formSubmitFlag = true;
         this.validateAllFormFields(this.formService.FormGen);
-        this.getFormValue.emit({ formValue: this.formService.FormGen.getRawValue(), formStatus: this.formService.FormGen.valid });
+        this.formSubmit.emit({ formValue: this.formService.FormGen.getRawValue(), formStatus: this.formService.FormGen.valid });
     }
 
     trackByFormControlName(index: number, field: any): string {
