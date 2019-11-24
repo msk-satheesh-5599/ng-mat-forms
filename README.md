@@ -207,11 +207,10 @@ template snippet:
 ### setControlValue
 
 __description__
-
-    * set an value for the any of the control in the formGroup.
-    * parameters 
-      * formControlName 
-      * value
+* set an value for the any of the control in the formGroup
+* parameters 
+  * formControlName : string
+  * value : string
     
 __example__
 ```javascript
@@ -240,4 +239,5 @@ export class MyTestApp {
     }
 
     constructor(private ngMatFormService:NgMatFormService) {}
+}
 ```
