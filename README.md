@@ -49,7 +49,7 @@ export class MyTestAppModule {}
 To use __ng-mat-forms__ define the application class as follows:
 
 ```javascript
-import {NgMatFormOptions,fields} from 'ng-mat-forms';
+import {NgMatFormOptions,NgMatFormFields} from 'ng-mat-forms';
 // other imports here...
 
 export class MyTestApp {
@@ -60,7 +60,7 @@ export class MyTestApp {
     };
 
     // Initialized a field list array which extended a field interface.
-    public ngMatFormFields: fields[] = [{
+    public ngMatFormFields: NgMatFormFields[] = [{
         type: 'input',
         label: 'User Name',
         placeholder: 'Enter a User Name',
@@ -193,7 +193,7 @@ template snippet:
 ```js
 onformFieldsChange(event: NgMatFormFieldChangeModal) {
   //Other operations here...
-  console.log({formValue: event.formValue,formStatus: event.formStatus});
+  console.log({controlName: event.controlName,value: event.value, event: event.event});
 }
 ```
 template snippet: 
@@ -201,5 +201,42 @@ template snippet:
 <ng-mat-forms [Fields]='ngMatFormFields' [options]='ngMatFormsOptions' 
               (formFieldsChange)="onformFieldsChange($event)"></ng-mat-forms>
 ```
-  
-  
+
+## Apis
+
+### setControlValue
+
+__description__
+    * set an value for the any of the control in the formGroup.
+    * parameters 
+      * formControlName 
+      * value
+    
+__example__
+```javascript
+import { NgMatFormOptions, NgMatFormFields, NgMatFormService } from 'ng-mat-forms';
+// other imports here...
+
+export class MyTestApp {
+
+    public ngMatFormsOptions: NgMatFormOptions = {
+        column: 3
+        // other options...
+    };
+
+    // Initialized a field list array which extended a field interface.
+    public ngMatFormFields: NgMatFormFields[] = [{
+        type: 'input',
+        label: 'User Name',
+        placeholder: 'Enter a User Name',
+        formControlName: 'name'
+        // other options...
+    }];
+    
+    setValue(): void {
+        //this.ngMatFormService.setControlValue(formControlName:string, name:string): void;
+        this.ngMatFormService.setControlValue('name', 'msk');
+    }
+
+    constructor(private ngMatFormService:NgMatFormService) {}
+```
