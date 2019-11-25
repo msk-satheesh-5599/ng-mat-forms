@@ -1,7 +1,7 @@
 <ng-container *ngIf="Fields.length > 0; then thenTemplate; else elseTemplate"></ng-container>
 <ng-template #thenTemplate>
     <mat-grid-list responsive='true' [cols]="breakpoint" rowHeight="100px" (window:resize)="onResize($event)">
-        <form [formGroup]='formService.FormGen' (ngSubmit)='click()'>
+        <form [formGroup]='formService.FormGen'>
             <mat-grid-tile *ngFor='let x of Fields;trackBy:trackByFormControlName;'>
                 <div *ngIf='x.type == "input"'>
                     <mat-form-field [appearance]="options.appearance" [color]="options.color"
@@ -85,14 +85,14 @@
                         <input matInput [placeholder]="x.placeholder" aria-label="x.label" [matAutocomplete]="auto"
                             [formControl]="x.formControlName">
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let state of x.list | async" [value]="item.value">
+                            <mat-option *ngFor="let item of x.list | async" [value]="item.value">
                                 <span>{{item.name}}</span>
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
                     <mat-error
                         *ngIf='formSubmit && (formService.FormGen.get(x.formControlName).invalid && formService.FormGen.get(x.formControlName).touched)'>
-                        {{getErrorMessage(service.FormGen.get(x.formControlName), x.label)}}</mat-error>
+                        {{getErrorMessage(formService.FormGen.get(x.formControlName), x.label)}}</mat-error>
                 </div>
             </mat-grid-tile>
         </form>

@@ -109,7 +109,7 @@ Note: `*mandatory`
 |errorMsgOnSubmit| false | boolean | To determine weather error messages of the fields need to show on field change or only on form submit|
 |floatLabel| auto | FloatLabelType | float label configuration |
 |color | primary | ThemePalette | color of the form field|
-| apperance | legacy | MatFormFieldAppearance | apperance of the form field|
+| appearance | legacy | MatFormFieldAppearance | appearance of the form field|
 
 __field attribute__
 

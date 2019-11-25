@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, AbstractControl } from '@angular/forms';
 import { NgMatFormsService } from './ng-mat-forms.service';
 import { NgMatFormFields } from './interfaces/fields.interface';
 import { NgMatFormOptions } from './interfaces/ng-mat-form-options.interface';
@@ -30,7 +30,7 @@ export class NgMatFormsComponent implements OnInit {
     @Input() readonly Fields: NgMatFormFields[];
     @Input() readonly options: NgMatFormOptions = {
         column: 3,
-        apperance: 'legacy',
+        appearance: 'legacy',
         color: 'primary',
         floatLabel: 'auto'
     };
@@ -42,7 +42,7 @@ export class NgMatFormsComponent implements OnInit {
     formSubmitFlag: boolean;
     matcher = new NgMatFormErrorStateMatcher();
 
-    constructor(private formService: NgMatFormsService) { }
+    constructor(public formService: NgMatFormsService) { }
 
     onResize(event): void {
         this.breakpoint = (event.target.innerWidth <= 400) ? 1 :
@@ -89,7 +89,7 @@ export class NgMatFormsComponent implements OnInit {
         return field.formControlName;
     }
 
-    getErrorMessage(control: FormControl, fieldName: string): string {
+    getErrorMessage(control: AbstractControl, fieldName: string): string {
         for (let error in control.errors) {
             return {
                 required: `${fieldName} is required`,

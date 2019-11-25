@@ -70,7 +70,7 @@ export class NgMatFormsService {
 
 }
 
-@Component({
+/* @Component({
     selector: 'error-message',
     template: `<p class='error' *ngIf='control.hasError'>{{getErrorMessages}}</p>`,
     styles: [
@@ -103,5 +103,5 @@ export class ErrorMessageComponent {
         return config[errors];
     }
 
-}
+} */
 
