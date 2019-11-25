@@ -428,3 +428,14 @@ export class MyTestApp {
     constructor(private ngMatFormService:NgMatFormService) {}
 }
 ```
+
+## Author
+
+* Author: msk
+
+## Keywords
+
+* ng-mat-forms
+* form-generator
+* Angular2+
+* typescript
