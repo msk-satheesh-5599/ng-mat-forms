@@ -119,19 +119,19 @@ Note: `*mandatory`
 
 | option | Default | Type | Description |
 | ------ |:-------:|:-----:|:------------|
-|type*| - | fieldType | type of the form field. it's a type of fieldType. types available `'input' , 'select' , 'radio' , 'multiSelect', 'checkBox', 'datePicker', 'autoComplete'` | 
-| label* | - | string | label of the form field|
-|placeholder* | - | string | placeholder of the form field |
-|formControlName* | - | string | formcontrolname for the form field |
-|directive | - | directive | to determine the behaviour of the field . directives available are `'alphabetOnly' , 'alphanumericOnly' , 'numericOnly' , 'custom'`|
-| regex | - | RegExp | if the directive is custom this regex is the behaviour of the form field|
-|defaultValue| - | string or number | to set initial value for the form field |
-| validators | - | Validators | validators for the form field. it extends angular build in validators|
-|list | - | selectlist[] | if the field type is `select` then this list is the options of the field.|
-|labelShow| - | boolean | display the label or not | 
-|minDate| - | Date | for disable the datepicker since the date|
-| maxDate | - | Date | for disable the datepicker untill the date|
-|disable| - | boolean | for disable the field | 
+|type*| no default value | fieldType | type of the form field. it's a type of fieldType. types available `'input' , 'select' , 'radio' , 'multiSelect', 'checkBox', 'datePicker', 'autoComplete'` | 
+| label* | no default value | string | label of the form field|
+|placeholder* | no default value | string | placeholder of the form field |
+|formControlName* | no default value | string | formcontrolname for the form field |
+|directive | no default value | directive | to determine the behaviour of the field . directives available are `'alphabetOnly' , 'alphanumericOnly' , 'numericOnly' , 'custom'`|
+| regex | no default value | RegExp | if the directive is custom this regex is the behaviour of the form field|
+|defaultValue| no default value | string or number | to set initial value for the form field |
+| validators | no default value | Validators | validators for the form field. it extends angular build in validators|
+|list | no default value | selectlist[] | if the field type is `select` then this list is the options of the field.|
+|labelShow| true | boolean | display the label or not | 
+|minDate| no default value | Date | for disable the datepicker since the date|
+| maxDate | no default value | Date | for disable the datepicker untill the date|
+|disable| false | boolean | for disable the field | 
 
 ### formChange callback
 
@@ -244,7 +244,7 @@ export class MyTestApp {
 ### setFormValue
 
 __description__
-* set an value for the the formGroup
+* set an value for the formGroup
 * parameters   
   * form value object contains formControlName as key and value
     * example: { name: 'msk' }
