@@ -1,9 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, AbstractControl } from '@angular/forms';
 import { NgMatFormsService } from './ng-mat-forms.service';
-import { NgMatFormFields } from './interfaces/fields.interface';
-import { NgMatFormOptions } from './interfaces/ng-mat-form-options.interface';
-import { NgMatFormFieldChangeModal } from './interfaces/formFieldChangeModal.interface';
+import {
+    FieldValidatorModel,
+    FieldValueModel,
+    NgMatFormFieldChangeModal,
+    NgMatFormFieldChanges,
+    NgMatFormFields,
+    NgMatFormOptions,
+    NgMatFormSubmitModal
+} from './interfaces/index';
 import { NgMatFormErrorStateMatcher } from './NgMatFormErrorStateMatcher.class';
 import { Observable } from 'rxjs';
 
@@ -70,6 +76,7 @@ export class NgMatFormsComponent implements OnInit {
     }
 
     valueChange(formControlName: string, event: any): void {
+
         const emitObj: NgMatFormFieldChangeModal = {
             controlName: formControlName,
             value: this.formService.FormGen.get(formControlName).value,
@@ -112,6 +119,54 @@ export class NgMatFormsComponent implements OnInit {
                 this.validateAllFormFields(control);
             }
         });
+    }
+
+    onFieldChangeOperations(event: NgMatFormFieldChangeModal) {
+        let changeOperations: NgMatFormFieldChanges[];
+        this.Fields.forEach((field) => {
+            if (field.formControlName == event.controlName) {
+                if (field.hasOwnProperty("changeEvents")) {
+                    changeOperations = field.changeEvents;
+                }
+            }
+        });
+        if (changeOperations.length > 0) {
+            changeOperations.forEach((changeOperation) => {
+                if (changeOperation.value == event.value) {
+                    Object.keys(changeOperation).forEach((keys) => {
+                        switch (keys) {
+                            case "disable":
+                                changeOperation.disable.forEach((control: string) => {
+                                    this.formService.setControlDisable(control);
+                                });
+                                break;
+                            case "enable":
+                                changeOperation.enable.forEach((control: string) => {
+                                    this.formService.setControlEnable(control);
+                                });
+                                break;
+                            case "setValidators":
+                                changeOperation.setValidators.forEach((control: FieldValidatorModel) => {
+                                    this.formService.setValidator(control.formControlName, control.validators);
+                                });
+                                break;
+                            case "removeValidators":
+                                changeOperation.removeValidators.forEach((control: string) => {
+                                    this.formService.removeValidator(control);
+                                });
+                                break;
+                            case "setValue":
+                                changeOperation.setValue.forEach((control: FieldValueModel) => {
+                                    this.formService.setControlValue(control.formControlName, control.value);
+                                });
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                }
+            });
+        }
     }
 
     /* setOptionsByDefault() {

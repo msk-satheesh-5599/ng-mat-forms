@@ -1,5 +1,6 @@
 import { Validators } from '@angular/forms';
 import { selectlist } from './select.interface'
+import { NgMatFormFieldChanges } from './fieldChange.interface'
 
 /**
  * @description
@@ -99,5 +100,8 @@ export interface NgMatFormFields {
      * Non-Mandatory to the Field Object    
     **/
     readonly disable?: boolean;
+
+    readonly changeEvents: Array<NgMatFormFieldChanges>;
+
 }
 

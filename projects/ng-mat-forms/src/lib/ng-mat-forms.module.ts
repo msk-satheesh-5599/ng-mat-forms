@@ -46,6 +46,13 @@ import { CommonModule } from '@angular/common';
     ],
     providers: [NgMatFormsService],
     bootstrap: [NgMatFormsComponent],
-    exports: [NgMatFormsComponent]
+    exports: [
+        NgMatFormsComponent,
+        NumberOnlyDirective,
+        AlphabetOnlyDirective,
+        AlphaNumericOnlyDirective,
+        customDirective,
+        DisableFieldDirective
+    ]
 })
 export class NgMatFormsModule { }
