@@ -1,4 +1,5 @@
 import { Validators } from '@angular/forms';
+import { Input } from '@angular/core';
 
 export interface FieldValidatorModel {
 
@@ -18,7 +19,7 @@ export interface FieldValueModel {
 
 export interface NgMatFormFieldChanges {
 
-    value: string | number;
+    value: any;
 
     disable?: Array<string>;
 

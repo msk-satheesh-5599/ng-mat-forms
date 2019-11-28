@@ -40,9 +40,10 @@ export class NgMatFormsComponent implements OnInit {
         color: 'primary',
         floatLabel: 'auto'
     };
-    @Output() readonly formSubmit: EventEmitter<any> = new EventEmitter();
-    @Output() readonly formFieldsChange: EventEmitter<any> = new EventEmitter();
+    @Output() readonly formSubmit: EventEmitter<NgMatFormSubmitModal> = new EventEmitter();
     @Output() readonly formChange: EventEmitter<Observable<any>> = new EventEmitter();
+    @Output() readonly formFieldsChange: EventEmitter<NgMatFormFieldChangeModal> = new EventEmitter();
+    @Output() readonly formFieldsBlurChange: EventEmitter<NgMatFormFieldChangeModal> = new EventEmitter();
     breakpoint: Number;
     submitArray: Array<Number>;
     formSubmitFlag: boolean;
@@ -68,7 +69,7 @@ export class NgMatFormsComponent implements OnInit {
 
     createForm(): FormGroup {
         const job = new FormGroup({});
-        this.Fields.map(x => {
+        this.Fields.forEach(x => {
             let validators: any = x.validators;
             job.addControl(x.formControlName, new FormControl(x.defaultValue, validators));
         });
@@ -76,13 +77,23 @@ export class NgMatFormsComponent implements OnInit {
     }
 
     valueChange(formControlName: string, event: any): void {
-
         const emitObj: NgMatFormFieldChangeModal = {
             controlName: formControlName,
             value: this.formService.FormGen.get(formControlName).value,
             event: event
         };
+        this.onFieldChangeOperations(emitObj);
         this.formFieldsChange.emit(emitObj);
+    }
+
+    blurChange(formControlName: string, event: any): void {
+        const emitObj: NgMatFormFieldChangeModal = {
+            controlName: formControlName,
+            value: this.formService.FormGen.get(formControlName).value,
+            event: event
+        };
+        this.onFieldChangeOperations(emitObj);
+        this.formFieldsBlurChange.emit(emitObj);
     }
 
     submit(): void {
@@ -111,7 +122,7 @@ export class NgMatFormsComponent implements OnInit {
     }
 
     validateAllFormFields(form: FormGroup): void {
-        Object.keys(form.controls).map((x) => {
+        Object.keys(form.controls).forEach((x) => {
             let control = form.get(x);
             if (control instanceof FormControl) {
                 control.markAsTouched({ onlySelf: true });
@@ -122,15 +133,17 @@ export class NgMatFormsComponent implements OnInit {
     }
 
     onFieldChangeOperations(event: NgMatFormFieldChangeModal) {
-        let changeOperations: NgMatFormFieldChanges[];
-        this.Fields.forEach((field) => {
-            if (field.formControlName == event.controlName) {
-                if (field.hasOwnProperty("changeEvents")) {
-                    changeOperations = field.changeEvents;
+        let change = new Observable((observer) => {
+            this.Fields.forEach((field) => {
+                if (field.formControlName == event.controlName) {
+                    if (field.hasOwnProperty("changeEvents") && field.changeEvents.length > 0) {
+                        observer.next(field.changeEvents);
+                    }
                 }
-            }
+            });
         });
-        if (changeOperations.length > 0) {
+
+        change.subscribe((changeOperations: NgMatFormFieldChanges[]) => {
             changeOperations.forEach((changeOperation) => {
                 if (changeOperation.value == event.value) {
                     Object.keys(changeOperation).forEach((keys) => {
@@ -166,7 +179,7 @@ export class NgMatFormsComponent implements OnInit {
                     });
                 }
             });
-        }
+        });
     }
 
     /* setOptionsByDefault() {

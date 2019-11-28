@@ -20,7 +20,8 @@ export class AppComponent implements AfterViewInit {
         placeholder: 'Enter a User Name',
         formControlName: 'name',
         directive: 'alphabetOnly',
-        validators: [Validators.required, Validators.email],
+        maxLength: '10',
+        validators: [Validators.required, Validators.email]
     }, {
         type: 'select',
         label: 'Password',
@@ -79,7 +80,13 @@ export class AppComponent implements AfterViewInit {
                 name: 'Infinity War',
                 value: 'Avengers'
             }
-        ]
+        ],
+        changeEvents: [{
+            value: true,
+            disable: ["name"],
+            setValue: [{formControlName: "name", value: "Satheesh"}],
+            removeValidators: ["name"]
+        }]
     }, {
         type: 'datePicker',
         label: 'Date of Birth',

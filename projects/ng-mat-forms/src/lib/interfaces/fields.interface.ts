@@ -101,7 +101,13 @@ export interface NgMatFormFields {
     **/
     readonly disable?: boolean;
 
-    readonly changeEvents: Array<NgMatFormFieldChanges>;
+    readonly changeEvents?: Array<NgMatFormFieldChanges>;
+
+    readonly blurEvents?: Array<NgMatFormFieldChanges>;
+
+    readonly maxLength?: string;
+
+    readonly minLength?: string;
 
 }
 
