@@ -65,6 +65,7 @@ export class NgMatFormsComponent implements OnInit {
         this.formChange.emit(this.formService.FormGen.valueChanges);
         this.breakpoint = (window.innerWidth <= 400) ? 1 : ((window.innerWidth <= 700) ? 2 : this.options.column);
         this.submitArray = Array(Number(this.options.column)).fill(0);
+        
     }
 
     createForm(): FormGroup {

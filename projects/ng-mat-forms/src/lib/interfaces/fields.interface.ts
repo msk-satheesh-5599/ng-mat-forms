@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
-import { selectlist } from './select.interface'
-import { NgMatFormFieldChanges } from './fieldChange.interface'
+import { selectlist } from './select.interface';
+import { NgMatFormFieldChanges } from './fieldChange.interface';
 
 /**
  * @description
@@ -108,6 +108,8 @@ export interface NgMatFormFields {
     readonly maxLength?: string;
 
     readonly minLength?: string;
+
+
 
 }
 
