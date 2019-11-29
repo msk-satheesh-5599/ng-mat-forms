@@ -6,6 +6,7 @@ import { NgMatFormFieldChangeModal } from './../../projects/ng-mat-forms/src/lib
 import { NgMatFormSubmitModal } from './../../projects/ng-mat-forms/src/lib/interfaces/formSubmitModel.interface';
 import { NgMatFormOptions } from '../../projects/ng-mat-forms/src/lib/interfaces/ng-mat-form-options.interface';
 import { Observable } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
     selector: 'app-root',
@@ -27,32 +28,14 @@ export class AppComponent implements AfterViewInit {
         label: 'Password',
         placeholder: 'Enter a Password',
         formControlName: 'password',
-        list: [
-            {
-                name: 'Infinity War',
-                value: 'Avengers',
-                type: 'option'
-            },
-            {
-                name: 'End Game',
-                value: 'Avengers',
-                type: 'option'
-            },
-            {
-                name: 'Baba-BlackSheep',
-                value: [{
-                    name: 'Infinity War',
-                    value: 'Avengers',
-                    type: 'option'
-                },
-                {
-                    name: 'End Game',
-                    value: 'Avengers',
-                    type: 'option'
-                }],
-                type: 'optionGroup'
-            }
-        ],
+        list: [],
+        getListFromApi: true,
+        api: {
+            header: new HttpHeaders().set("Access-Control-Allow-Origin", "*"),
+            url: "https://my-json-server.typicode.com/msk-satheesh-5599/Portfolio/db",
+            method: "get",
+            params: {}
+        },
         validators: [Validators.required]
     }, {
         type: 'radio',
@@ -84,7 +67,7 @@ export class AppComponent implements AfterViewInit {
         changeEvents: [{
             value: true,
             disable: ["name"],
-            setValue: [{formControlName: "name", value: "Satheesh"}],
+            setValue: [{ formControlName: "name", value: "Satheesh" }],
             removeValidators: ["name"]
         }]
     }, {

@@ -20,6 +20,7 @@ import {
     MatNativeDateModule
 } from '@angular/material';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import { CommonModule } from '@angular/common';
         MatDatepickerModule,
         MatNativeDateModule,
         MatAutocompleteModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientModule
     ],
     providers: [NgMatFormsService],
     bootstrap: [NgMatFormsComponent],

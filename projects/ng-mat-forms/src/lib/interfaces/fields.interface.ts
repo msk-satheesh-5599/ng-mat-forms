@@ -1,6 +1,5 @@
 import { Validators } from '@angular/forms';
-import { selectlist } from './select.interface';
-import { NgMatFormFieldChanges } from './fieldChange.interface';
+import { selectlist, NgMatFormFieldChanges, NgMatSelectListFromUrl } from './index';
 
 /**
  * @description
@@ -75,7 +74,7 @@ export interface NgMatFormFields {
      * ### let list = [{name: '', value: '' },{name: '', value: '' }];
      * Non-Mandatory to the Field Object    
     **/
-    readonly list?: selectlist[];
+    list?: selectlist[];
     /**
      * @description
      * This value is used for hiding the label and show the label and it accepts the boolean
@@ -108,6 +107,10 @@ export interface NgMatFormFields {
     readonly maxLength?: string;
 
     readonly minLength?: string;
+
+    readonly getListFromApi?: boolean;
+
+    readonly api?: NgMatSelectListFromUrl;
 
 
 

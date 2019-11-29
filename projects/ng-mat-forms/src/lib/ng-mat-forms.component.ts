@@ -8,7 +8,8 @@ import {
     NgMatFormFieldChanges,
     NgMatFormFields,
     NgMatFormOptions,
-    NgMatFormSubmitModal
+    NgMatFormSubmitModal,
+    selectlist
 } from './interfaces/index';
 import { NgMatFormErrorStateMatcher } from './NgMatFormErrorStateMatcher.class';
 import { Observable } from 'rxjs';
@@ -60,12 +61,12 @@ export class NgMatFormsComponent implements OnInit {
     ngOnInit() {
         this.formService.FormGen = this.createForm();
         this.formService.Fields = this.Fields;
+        this.getSelectListFromService();
         this.formSubmitFlag = ('errorMsgOnSubmit' in this.options) ? ((this.options.errorMsgOnSubmit) ? false : true) : true;
         this.matcher.setupdateOnSubmit('options', this.formSubmitFlag);
         this.formChange.emit(this.formService.FormGen.valueChanges);
         this.breakpoint = (window.innerWidth <= 400) ? 1 : ((window.innerWidth <= 700) ? 2 : this.options.column);
         this.submitArray = Array(Number(this.options.column)).fill(0);
-        
     }
 
     createForm(): FormGroup {
@@ -182,6 +183,24 @@ export class NgMatFormsComponent implements OnInit {
             });
         });
     }
+
+    getSelectListFromService() {
+        this.Fields.forEach((field: NgMatFormFields, i) => {
+            if (field.hasOwnProperty('getListFromUrl') && field.getListFromUrl) {
+                if (field.hasOwnProperty('url')) {
+                    this.formService.getData(field.url).subscribe((response: any) => {
+                        response.data.forEach((data: selectlist) => {
+                            this.Fields[i]['list'].push(data);
+                        });
+                    }, error => {
+                        console.log(error);
+                    });
+                }
+            }
+        });
+    }
+
+
 
     /* setOptionsByDefault() {
         this.options.hasOwnProperty('apperance') ? '' : this.options['apperance'] = 'legacy';

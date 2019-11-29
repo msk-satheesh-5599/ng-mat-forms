@@ -1,6 +1,8 @@
-import { Injectable, Input, Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgMatFormFields } from './interfaces/fields.interface';
+import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { NgMatFormFields, NgMatSelectListFromUrl } from './interfaces/index';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export type formValue = {
     [key: string]: string
@@ -12,7 +14,7 @@ export type formValue = {
 export class NgMatFormsService {
     FormGen: FormGroup;
     Fields: NgMatFormFields[];
-    constructor() { }
+    constructor(private httpClient: HttpClient) { }
 
     readonly setControlValue: any = (formControlName: string, value: any) => {
         this.replaceValue(formControlName, value).then((val) => {
@@ -66,6 +68,14 @@ export class NgMatFormsService {
     readonly removeValidator = (formControlName: string) => {
         this.FormGen.get(formControlName).clearValidators();
         this.FormGen.get(formControlName).updateValueAndValidity({ onlySelf: true });
+    };
+
+    readonly getData = (data: NgMatSelectListFromUrl): Observable<any> => {
+        if (data.method === 'get') {
+            return this.httpClient.get(data.url, { headers: data.header, params: data.params, responseType: 'json' });
+        } else if (data.method === 'post') {
+            return this.httpClient.post(data.url, data.params, { headers: data.header, responseType: 'json' });
+        }
     };
 
 }
