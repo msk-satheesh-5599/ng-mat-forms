@@ -112,7 +112,5 @@ export interface NgMatFormFields {
 
     readonly api?: NgMatSelectListFromUrl;
 
-
-
 }
 

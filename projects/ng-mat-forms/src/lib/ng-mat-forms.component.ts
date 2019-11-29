@@ -186,9 +186,9 @@ export class NgMatFormsComponent implements OnInit {
 
     getSelectListFromService() {
         this.Fields.forEach((field: NgMatFormFields, i) => {
-            if (field.hasOwnProperty('getListFromUrl') && field.getListFromUrl) {
-                if (field.hasOwnProperty('url')) {
-                    this.formService.getData(field.url).subscribe((response: any) => {
+            if (field.hasOwnProperty('getListFromApi') && field.getListFromApi) {
+                if (field.hasOwnProperty('api')) {
+                    this.formService.getData(field.api).subscribe((response: any) => {
                         response.data.forEach((data: selectlist) => {
                             this.Fields[i]['list'].push(data);
                         });
