@@ -23,7 +23,7 @@ export class NgMatFormsService {
     };
 
     readonly setFormValue: any = (obj: formValue) => {
-        Object.keys(obj).map(x => {
+        Object.keys(obj).forEach(x => {
             this.setControlValue(x, obj[x]);
         });
     };

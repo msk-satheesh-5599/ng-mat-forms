@@ -34,8 +34,8 @@ import { Observable } from 'rxjs';
 })
 export class NgMatFormsComponent implements OnInit {
 
-    @Input() readonly Fields: NgMatFormFields[];
-    @Input() readonly options: NgMatFormOptions = {
+    @Input() Fields: NgMatFormFields[] = [];
+    @Input() options: NgMatFormOptions = {
         column: 3,
         appearance: 'legacy',
         color: 'primary',
@@ -71,9 +71,13 @@ export class NgMatFormsComponent implements OnInit {
 
     createForm(): FormGroup {
         const job = new FormGroup({});
-        this.Fields.forEach(x => {
-            let validators: any = x.validators;
-            job.addControl(x.formControlName, new FormControl(x.defaultValue, validators));
+        this.Fields.forEach((x: NgMatFormFields) => {
+            let initialValue = x.hasOwnProperty('defaultValue') ? x.defaultValue : '';
+            if (x.hasOwnProperty('validators')) {
+                job.addControl(x.formControlName, new FormControl(initialValue, x.validators));
+            } else {
+                job.addControl(x.formControlName, new FormControl(initialValue));
+            }
         });
         return job;
     }

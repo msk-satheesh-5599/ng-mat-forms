@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { NgMatFormsComponent } from './ng-mat-forms.component';
 import { NgMatFormsService } from './ng-mat-forms.service';
-import { AlphabetOnlyDirective } from './directives/alphabetOnly.directive';
-import { AlphaNumericOnlyDirective } from './directives/alphanumericOnly.directive';
-import { customDirective } from './directives/custom.directive';
-import { NumberOnlyDirective } from './directives/numericOnly.directive';
-import { DisableFieldDirective } from './directives/disable-field.directive';
+import {
+    AlphaNumericOnlyDirective,
+    AlphabetOnlyDirective,
+    DisableFieldDirective,
+    NumberOnlyDirective,
+    customDirective
+} from './directives/index.directive';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
     MatInputModule,
