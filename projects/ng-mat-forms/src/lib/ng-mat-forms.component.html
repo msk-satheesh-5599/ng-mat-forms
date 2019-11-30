@@ -48,7 +48,7 @@
                     <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true'>{{ x.label }}</mat-label>
                     <section class="example-section">
                         <mat-radio-group aria-label="x.label" [formControlName]='x.formControlName'
-                            (change)='valueChange(x.formControlName, event)'
+                            (change)='valueChange(x.formControlName, $event)'
                             (blur)='blurChange(x.formControlName, $event)'>
                             <mat-radio-button *ngFor="let item of x.list" [value]='item.value'>{{ item.name }}
                             </mat-radio-button>
@@ -64,7 +64,7 @@
                     <section class="example-section">
                         <mat-checkbox class="example-margin" *ngFor="let item of x.list"
                             [formControlName]='x.formControlName' [value]='item.value'
-                            (change)='valueChange(x.formControlName, event)'
+                            (change)='valueChange(x.formControlName, $event)'
                             (blur)='blurChange(x.formControlName, $event)'>
                             {{ item.name }}</mat-checkbox>
                     </section>
