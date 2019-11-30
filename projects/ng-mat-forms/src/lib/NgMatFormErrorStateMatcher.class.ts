@@ -2,8 +2,8 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { FormControl } from '@angular/forms';
 
 export class NgMatFormErrorStateMatcher implements ErrorStateMatcher {
-    private updateOnSubmit: boolean = true;
-    private formSubmit: boolean = false;
+    private updateOnSubmit = true;
+    private formSubmit = false;
 
     isErrorState(control: FormControl | null, form: null): boolean {
         return (!this.updateOnSubmit ? (!!(control && control.invalid && (control.touched && this.formSubmit))) :
@@ -11,6 +11,6 @@ export class NgMatFormErrorStateMatcher implements ErrorStateMatcher {
     }
 
     setupdateOnSubmit(...arg) {
-        arg[0] == 'options' ? this.updateOnSubmit = arg[1] : this.formSubmit = arg[1];
+        arg[0] === 'options' ? this.updateOnSubmit = arg[1] : this.formSubmit = arg[1];
     }
 }

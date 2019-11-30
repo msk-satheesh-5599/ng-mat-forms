@@ -1,19 +1,19 @@
 import { Directive, Input, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-    selector: 'input[numbersOnly]'
+    selector: 'input[libNumbersOnly]'
 })
 export class NumberOnlyDirective {
-    @Input() numbersOnly: boolean = false;
-    constructor(private _el: ElementRef) { }
+    @Input() libNumbersOnly = false;
+    constructor(private elementRef: ElementRef) { }
     @HostListener('input', ['$event'])
     @HostListener('copy', ['$event'])
     @HostListener('keydown', ['$event'])
     onInput(event) {
-        if (this.numbersOnly) {
-            const initalValue = this._el.nativeElement.value.replace(/[a-zA-Z]*/g, '');
-            this._el.nativeElement.value = initalValue.replace(/[^\w\s]/gi, '');
-            if (initalValue !== this._el.nativeElement.value) {
+        if (this.libNumbersOnly) {
+            const initalValue = this.elementRef.nativeElement.value.replace(/[a-zA-Z]*/g, '');
+            this.elementRef.nativeElement.value = initalValue.replace(/[^\w\s]/gi, '');
+            if (initalValue !== this.elementRef.nativeElement.value) {
                 event.stopPropagation();
             }
         }

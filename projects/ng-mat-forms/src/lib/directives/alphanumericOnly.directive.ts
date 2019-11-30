@@ -1,18 +1,18 @@
 import { Directive, Input, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-    selector: 'input[alphanumericOnly]'
+    selector: 'input[libAlphanumericOnly]'
 })
 export class AlphaNumericOnlyDirective {
-    @Input() alphanumericOnly: boolean = false;
-    constructor(private _el: ElementRef) { }
+    @Input() libAlphanumericOnly = false;
+    constructor(private elementRef: ElementRef) { }
     @HostListener('input', ['$event'])
     @HostListener('copy', ['$event'])
     onInput(event) {
-        if (this.alphanumericOnly) {
-            const initalValue = this._el.nativeElement.value;
-            this._el.nativeElement.value = initalValue.replace(/[^\w\s]/gi, '');
-            if (initalValue !== this._el.nativeElement.value) {
+        if (this.libAlphanumericOnly) {
+            const initalValue = this.elementRef.nativeElement.value;
+            this.elementRef.nativeElement.value = initalValue.replace(/[^\w\s]/gi, '');
+            if (initalValue !== this.elementRef.nativeElement.value) {
                 event.stopPropagation();
             }
         }

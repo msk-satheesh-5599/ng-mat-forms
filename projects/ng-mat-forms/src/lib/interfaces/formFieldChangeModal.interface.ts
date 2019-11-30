@@ -5,5 +5,5 @@ export interface NgMatFormFieldChangeModal {
 
     value: string | number;
 
-    event: Event;
+    event: any;
 }

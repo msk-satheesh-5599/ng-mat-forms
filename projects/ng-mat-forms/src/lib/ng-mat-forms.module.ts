@@ -6,7 +6,7 @@ import {
     AlphabetOnlyDirective,
     DisableFieldDirective,
     NumberOnlyDirective,
-    customDirective
+    CustomDirective
 } from './directives/index.directive';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
@@ -30,7 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
         NumberOnlyDirective,
         AlphabetOnlyDirective,
         AlphaNumericOnlyDirective,
-        customDirective,
+        CustomDirective,
         DisableFieldDirective
     ],
     imports: [

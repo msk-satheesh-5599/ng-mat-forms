@@ -9,7 +9,7 @@ import {
     NgMatFormFields,
     NgMatFormOptions,
     NgMatFormSubmitModal,
-    selectlist
+    SelectList
 } from './interfaces/index';
 import { NgMatFormErrorStateMatcher } from './NgMatFormErrorStateMatcher.class';
 import { Observable } from 'rxjs';
@@ -45,8 +45,8 @@ export class NgMatFormsComponent implements OnInit {
     @Output() readonly formChange: EventEmitter<Observable<any>> = new EventEmitter();
     @Output() readonly formFieldsChange: EventEmitter<NgMatFormFieldChangeModal> = new EventEmitter();
     @Output() readonly formFieldsBlurChange: EventEmitter<NgMatFormFieldChangeModal> = new EventEmitter();
-    breakpoint: Number;
-    submitArray: Array<Number>;
+    breakpoint: number;
+    submitArray: Array<number>;
     formSubmitFlag: boolean;
     matcher = new NgMatFormErrorStateMatcher();
 
@@ -72,7 +72,7 @@ export class NgMatFormsComponent implements OnInit {
     createForm(): FormGroup {
         const job = new FormGroup({});
         this.Fields.forEach((x: NgMatFormFields) => {
-            let initialValue = x.hasOwnProperty('defaultValue') ? x.defaultValue : '';
+            const initialValue = x.hasOwnProperty('defaultValue') ? x.defaultValue : '';
             if (x.hasOwnProperty('validators')) {
                 job.addControl(x.formControlName, new FormControl(initialValue, x.validators));
             } else {
@@ -82,21 +82,21 @@ export class NgMatFormsComponent implements OnInit {
         return job;
     }
 
-    valueChange(formControlName: string, event: any): void {
+    valueChange(formControlName: string, eventChange): void {
         const emitObj: NgMatFormFieldChangeModal = {
             controlName: formControlName,
             value: this.formService.FormGen.get(formControlName).value,
-            event: event
+            event: eventChange
         };
         this.onFieldChangeOperations(emitObj);
         this.formFieldsChange.emit(emitObj);
     }
 
-    blurChange(formControlName: string, event: any): void {
+    blurChange(formControlName: string, eventBlur): void {
         const emitObj: NgMatFormFieldChangeModal = {
             controlName: formControlName,
             value: this.formService.FormGen.get(formControlName).value,
-            event: event
+            event: eventBlur
         };
         this.onFieldChangeOperations(emitObj);
         this.formFieldsBlurChange.emit(emitObj);
@@ -104,7 +104,7 @@ export class NgMatFormsComponent implements OnInit {
 
     submit(): void {
         this.matcher.setupdateOnSubmit('formSubmit', true);
-        (this.formSubmitFlag) ? '' : this.formSubmitFlag = true;
+        if (!this.formSubmitFlag) { this.formSubmitFlag = true; }
         this.validateAllFormFields(this.formService.FormGen);
         this.formSubmit.emit({ formValue: this.formService.FormGen.getRawValue(), formStatus: this.formService.FormGen.valid });
     }
@@ -114,22 +114,20 @@ export class NgMatFormsComponent implements OnInit {
     }
 
     getErrorMessage(control: AbstractControl, fieldName: string): string {
-        for (let error in control.errors) {
+        control.errors.forEach((error) => {
             return {
                 required: `${fieldName} is required`,
-                minlength: `Minimun Length for ${fieldName} is 
-                    ${control.errors[error].requiredLength}`,
-                maxlength: `Maximum Length for ${fieldName} is 
-                    ${control.errors[error].requiredLength}`,
+                minlength: `Minimun Length for ${fieldName} is ${control.errors[error].requiredLength}`,
+                maxlength: `Maximum Length for ${fieldName} is ${control.errors[error].requiredLength}`,
                 email: `Enter valid email for ${fieldName}`
             }[error];
-        }
+        });
         return;
     }
 
     validateAllFormFields(form: FormGroup): void {
         Object.keys(form.controls).forEach((x) => {
-            let control = form.get(x);
+            const control = form.get(x);
             if (control instanceof FormControl) {
                 control.markAsTouched({ onlySelf: true });
             } else if (control instanceof FormGroup) {
@@ -139,10 +137,10 @@ export class NgMatFormsComponent implements OnInit {
     }
 
     onFieldChangeOperations(event: NgMatFormFieldChangeModal) {
-        let change = new Observable((observer) => {
+        const change = new Observable((observer) => {
             this.Fields.forEach((field) => {
-                if (field.formControlName == event.controlName) {
-                    if (field.hasOwnProperty("changeEvents") && field.changeEvents.length > 0) {
+                if (field.formControlName === event.controlName) {
+                    if (field.hasOwnProperty('changeEvents') && field.changeEvents.length > 0) {
                         observer.next(field.changeEvents);
                     }
                 }
@@ -151,30 +149,30 @@ export class NgMatFormsComponent implements OnInit {
 
         change.subscribe((changeOperations: NgMatFormFieldChanges[]) => {
             changeOperations.forEach((changeOperation) => {
-                if (changeOperation.value == event.value) {
+                if (changeOperation.value === event.value) {
                     Object.keys(changeOperation).forEach((keys) => {
                         switch (keys) {
-                            case "disable":
+                            case 'disable':
                                 changeOperation.disable.forEach((control: string) => {
                                     this.formService.setControlDisable(control);
                                 });
                                 break;
-                            case "enable":
+                            case 'enable':
                                 changeOperation.enable.forEach((control: string) => {
                                     this.formService.setControlEnable(control);
                                 });
                                 break;
-                            case "setValidators":
+                            case 'setValidators':
                                 changeOperation.setValidators.forEach((control: FieldValidatorModel) => {
                                     this.formService.setValidator(control.formControlName, control.validators);
                                 });
                                 break;
-                            case "removeValidators":
+                            case 'removeValidators':
                                 changeOperation.removeValidators.forEach((control: string) => {
                                     this.formService.removeValidator(control);
                                 });
                                 break;
-                            case "setValue":
+                            case 'setValue':
                                 changeOperation.setValue.forEach((control: FieldValueModel) => {
                                     this.formService.setControlValue(control.formControlName, control.value);
                                 });
@@ -193,8 +191,8 @@ export class NgMatFormsComponent implements OnInit {
             if (field.hasOwnProperty('getListFromApi') && field.getListFromApi) {
                 if (field.hasOwnProperty('api')) {
                     this.formService.getData(field.api).subscribe((response: any) => {
-                        response.data.forEach((data: selectlist) => {
-                            this.Fields[i]['list'].push(data);
+                        response.data.forEach((data: SelectList) => {
+                            this.Fields[i].list.push(data);
                         });
                     }, error => {
                         console.log(error);

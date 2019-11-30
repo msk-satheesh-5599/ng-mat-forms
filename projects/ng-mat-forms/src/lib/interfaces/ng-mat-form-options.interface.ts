@@ -4,12 +4,12 @@ export interface NgMatFormOptions {
 
     readonly column: number;
 
-    readonly errorMsgOnSubmit?: boolean
+    readonly errorMsgOnSubmit?: boolean;
 
     appearance?: MatFormFieldAppearance;
 
     color?: ThemePalette;
 
-    floatLabel?: FloatLabelType
+    floatLabel?: FloatLabelType;
 
 }

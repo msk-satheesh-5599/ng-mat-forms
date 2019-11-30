@@ -27,7 +27,7 @@ describe('NgMatFormsService', () => {
         const service: NgMatFormsService = TestBed.get(NgMatFormsService);
         expect(service.getData).toBeTruthy();
     });
-    
+
     it('should have setControlEnable function', () => {
         const service: NgMatFormsService = TestBed.get(NgMatFormsService);
         expect(service.getData).toBeTruthy();

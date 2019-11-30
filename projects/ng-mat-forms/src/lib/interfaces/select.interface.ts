@@ -1,9 +1,9 @@
-export interface selectlist {
+export interface SelectList {
 
     name: string;
 
     type?: 'option' | 'optionGroup';
 
-    value: string | selectlist[];
+    value: string | SelectList[];
 
 }

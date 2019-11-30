@@ -20,7 +20,7 @@ import {
     AlphabetOnlyDirective,
     DisableFieldDirective,
     NumberOnlyDirective,
-    customDirective
+    CustomDirective
 } from './directives/index.directive';
 
 describe('NgMatFormsComponent', () => {
@@ -50,7 +50,7 @@ describe('NgMatFormsComponent', () => {
                 AlphabetOnlyDirective,
                 DisableFieldDirective,
                 NumberOnlyDirective,
-                customDirective
+                CustomDirective
             ]
         })
             .compileComponents();
@@ -64,7 +64,7 @@ describe('NgMatFormsComponent', () => {
             formControlName: 'name',
             label: 'name',
             placeholder: 'name'
-        }]
+        }];
         fixture.detectChanges();
     });
 

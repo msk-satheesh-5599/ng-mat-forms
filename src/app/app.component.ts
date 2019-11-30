@@ -31,9 +31,9 @@ export class AppComponent implements AfterViewInit {
         list: [],
         getListFromApi: true,
         api: {
-            header: new HttpHeaders().set("Access-Control-Allow-Origin", "*"),
-            url: "https://my-json-server.typicode.com/msk-satheesh-5599/Portfolio/db",
-            method: "get",
+            header: new HttpHeaders().set('Access-Control-Allow-Origin', '*'),
+            url: 'https://my-json-server.typicode.com/msk-satheesh-5599/Portfolio/db',
+            method: 'get',
             params: {}
         },
         validators: [Validators.required]
@@ -66,9 +66,9 @@ export class AppComponent implements AfterViewInit {
         ],
         changeEvents: [{
             value: true,
-            disable: ["name"],
-            setValue: [{ formControlName: "name", value: "Satheesh" }],
-            removeValidators: ["name"]
+            disable: ['name'],
+            setValue: [{ formControlName: 'name', value: 'Satheesh' }],
+            removeValidators: ['name']
         }]
     }, {
         type: 'datePicker',
