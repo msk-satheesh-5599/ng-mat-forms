@@ -6,7 +6,7 @@ import { NgControl } from '@angular/forms';
 })
 export class DisableFieldDirective {
 
-    @Input() set disableField(condition: boolean) {
+    @Input('libDisableField') set disableField(condition: boolean) {
         const action = condition ? 'disable' : 'enable';
         this.ngControl.control[action]({ onlySelf: true });
     }

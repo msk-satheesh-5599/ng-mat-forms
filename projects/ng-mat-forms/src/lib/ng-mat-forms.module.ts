@@ -55,7 +55,7 @@ import { HttpClientModule } from '@angular/common/http';
         NumberOnlyDirective,
         AlphabetOnlyDirective,
         AlphaNumericOnlyDirective,
-        customDirective,
+        CustomDirective,
         DisableFieldDirective
     ]
 })

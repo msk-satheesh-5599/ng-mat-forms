@@ -1,5 +1,5 @@
 import { Validators } from '@angular/forms';
-import { selectlist, NgMatFormFieldChanges, NgMatSelectListFromUrl } from './index';
+import { SelectList, NgMatFormFieldChanges, NgMatSelectListFromUrl } from './index';
 
 /**
  * @description
@@ -74,7 +74,7 @@ export interface NgMatFormFields {
      * ### let list = [{name: '', value: '' },{name: '', value: '' }];
      * Non-Mandatory to the Field Object
      */
-    list?: selectlist[];
+    list?: SelectList[];
     /**
      * @description
      * This value is used for hiding the label and show the label and it accepts the boolean

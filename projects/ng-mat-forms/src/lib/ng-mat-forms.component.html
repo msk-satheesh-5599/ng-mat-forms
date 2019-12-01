@@ -9,12 +9,14 @@
                         <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true'>{{ x.label }}</mat-label>
                         <input matInput [placeholder]="x.placeholder" [formControlName]='x.formControlName'
                             (change)='valueChange(x.formControlName, $event)' [errorStateMatcher]="matcher"
-                            [libNumbersOnly]='x.directive == "numeric"' [libAlphabetOnly]='x.directive == "alpha"'
-                            [libAlphanumericOnly]='x.directive == "alphanumeric"' [libCustomRegex]='x.directive == "custom"'
+                            [libNumbersOnly]='x.directive == "numeric"' 
+                            [libAlphabetOnly]='x.directive == "alpha"'
+                            [libAlphanumericOnly]='x.directive == "alphanumeric"' 
+                            [libCustomRegex]='x.directive == "custom"'
+                            [libDisableField]='x.hasOwnProperty("disable") ? x.disable : false'
                             [regExp]='x.hasOwnProperty("reGex") ? x.reGex : ""'
                             [maxlength]='x.hasOwnProperty("maxLength") ? x.maxLength : ""'
                             [minlength]='x.hasOwnProperty("minLength") ? x.minLength : ""'
-                            [libDisableField]='x.hasOwnProperty("disable") ? x.disable : false'
                             (blur)='blurChange(x.formControlName, $event)'>
                         <mat-error
                             *ngIf='formSubmit && (formService.FormGen.get(x.formControlName).invalid && formService.FormGen.get(x.formControlName).touched)'>

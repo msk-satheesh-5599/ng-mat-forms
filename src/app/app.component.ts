@@ -22,6 +22,7 @@ export class AppComponent implements AfterViewInit {
         formControlName: 'name',
         directive: 'alphabetOnly',
         maxLength: '10',
+        disable: true,
         validators: [Validators.required, Validators.email]
     }, {
         type: 'select',

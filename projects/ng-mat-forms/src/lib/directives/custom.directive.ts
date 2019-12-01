@@ -4,7 +4,7 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
     selector: 'input[libCustomRegex]'
 })
 export class CustomDirective {
-    @Input() libCustomRegex = false;
+    @Input('libCustomRegex') libCustomRegex = false;
     @Input() regExp: any;
     constructor(private elementRef: ElementRef) { }
     @HostListener('input', ['$event'])

@@ -4,7 +4,7 @@ import { Directive, Input, ElementRef, HostListener } from '@angular/core';
     selector: 'input[libAlphanumericOnly]'
 })
 export class AlphaNumericOnlyDirective {
-    @Input() libAlphanumericOnly = false;
+    @Input('libAlphanumericOnly') libAlphanumericOnly = false;
     constructor(private elementRef: ElementRef) { }
     @HostListener('input', ['$event'])
     @HostListener('copy', ['$event'])
