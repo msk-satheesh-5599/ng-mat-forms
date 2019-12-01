@@ -19,7 +19,7 @@ cache:
 
 script:
   - ng lint
-  - ng test --watch=false
+  - ng test ng-mat-forms --watch=false
   - ng build --prod
 
 
