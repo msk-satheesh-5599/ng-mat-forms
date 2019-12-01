@@ -15,13 +15,11 @@ import {
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { NgMatFormsComponent } from './ng-mat-forms.component';
-import {
-    AlphaNumericOnlyDirective,
-    AlphabetOnlyDirective,
-    DisableFieldDirective,
-    NumberOnlyDirective,
-    CustomDirective
-} from './directives/index.directive';
+import { CustomDirective } from './directives/custom.directive';
+import { AlphabetOnlyDirective } from './directives/alphabetOnly.directive';
+import { AlphaNumericOnlyDirective } from './directives/alphanumericOnly.directive';
+import { DisableFieldDirective } from './directives/disable-field.directive';
+import { NumberOnlyDirective } from './directives/numericOnly.directive';
 
 describe('NgMatFormsComponent', () => {
     let component: NgMatFormsComponent;

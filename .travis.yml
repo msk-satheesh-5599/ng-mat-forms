@@ -19,6 +19,7 @@ cache:
 
 script:
   - ng lint
+  - ng test --watch=false
   - ng build --prod
 
 
