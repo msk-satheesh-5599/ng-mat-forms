@@ -15,7 +15,8 @@ import { NgMatFormErrorStateMatcher } from './NgMatFormErrorStateMatcher.class';
 import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'ng-mat-forms',
+    selector: 'lib-ng-mat-forms',
+    exportAs: 'ng-mat-forms',
     templateUrl: 'ng-mat-forms.component.html',
     styles: [`
         .mat-radio-button ~ .mat-radio-button {
