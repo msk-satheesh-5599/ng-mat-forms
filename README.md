@@ -4,7 +4,7 @@
 
 Highly configurable Angular Dynamic Form Generator With Angular Material. Compatible Angular2+.
 
-[![Build Status](https://travis-ci.org/msk-satheesh-5599/ng-mat-forms.svg?branch=master](https://travis-ci.org/msk-satheesh-5599/ng-mat-forms.svg?branch=master)
+[![Build Status](https://travis-ci.org/msk-satheesh-5599/ng-mat-forms.svg?branch=master](https://travis-ci.org/msk-satheesh-5599/ng-mat-forms)
   
 ## Installation
 
