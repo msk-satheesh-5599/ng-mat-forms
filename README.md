@@ -1,11 +1,15 @@
 # ng-mat-forms
 
+__Angular dynamic form generator__
+
+[![Build Status](https://travis-ci.org/msk-satheesh-5599/ng-mat-forms.svg?branch=master)](https://travis-ci.org/msk-satheesh-5599/ng-mat-forms)
+[![npm](https://img.shields.io/npm/v/ng-mat-forms.svg?style=flat-square)](https://www.npmjs.com/package/ng-mat-forms)
+[![npm](https://img.shields.io/npm/dt/ng-mat-forms.svg)](https://www.npmjs.com/package/ng-mat-forms)
+
 ## Description
 
 Highly configurable Angular Dynamic Form Generator With Angular Material. Compatible Angular2+.
 
-[![Build Status](https://travis-ci.org/msk-satheesh-5599/ng-mat-forms.svg?branch=master](https://travis-ci.org/msk-satheesh-5599/ng-mat-forms)
-  
 ## Installation
 
 To install this component to an external project, follow the procedure:
