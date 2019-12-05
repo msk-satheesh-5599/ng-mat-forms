@@ -1,5 +1,9 @@
 # ng-mat-forms
 
+<p align="center">
+  <img width="300" height="300" src="https://github.com/msk-satheesh-5599/ng-mat-forms/blob/master/ng-mat-form.png">
+</p>
+
 __Angular dynamic form generator__
 
 [![Build Status](https://travis-ci.org/msk-satheesh-5599/ng-mat-forms.svg?branch=master)](https://travis-ci.org/msk-satheesh-5599/ng-mat-forms)
