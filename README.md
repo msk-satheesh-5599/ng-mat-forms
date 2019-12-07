@@ -2,7 +2,7 @@
 # ng-mat-forms
 
 <p align="center">
-  <img height="200" style="box-shadow: 10px 10px 10px 0px #621467de" src="https://github.com/msk-satheesh-5599/ng-mat-forms/blob/master/ng-mat-form.png">
+  <img height="200" style="box-shadow: 10px 10px 10px 0px #621467" src="https://github.com/msk-satheesh-5599/ng-mat-forms/blob/master/src/assets/ng-mat.png">
 </p>
 
 __Angular dynamic form generator__
