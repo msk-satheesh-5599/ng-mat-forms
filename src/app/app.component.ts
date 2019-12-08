@@ -89,10 +89,6 @@ export class AppComponent implements AfterViewInit {
     constructor(private service: NgMatFormsService) { }
 
     ngAfterViewInit() {
-        setTimeout(() => {
-            this.service.setControlValue('name', 'msk');
-            /* this.service.setControlDisable('name'); */
-        }, 1000);
     }
 
 
