@@ -37,7 +37,29 @@ export class AppComponent implements AfterViewInit {
             method: 'get',
             params: {}
         },
-        validators: [Validators.required]
+        validators: [Validators.required],
+        errorMessage: {
+            required: 'required!'
+        },
+        loadDepenentSelectOnChange: {
+            formControlName: 'dependent',
+            api: {
+                header: new HttpHeaders().set('Access-Control-Allow-Origin', '*'),
+                url: `https://my-json-server.typicode.com/msk-satheesh-5599/Portfolio/data`,
+                method: 'get',
+                params: { value: "msk" }
+            },
+        }
+    }, {
+        type: 'select',
+        label: 'Password',
+        placeholder: 'Enter a Password',
+        formControlName: 'dependent',
+        list: [],
+        validators: [Validators.required],
+        errorMessage: {
+            required: 'required!'
+        }
     }, {
         type: 'radio',
         label: 'Confirm Password',
@@ -82,7 +104,6 @@ export class AppComponent implements AfterViewInit {
 
     option: NgMatFormOptions = {
         column: 3,
-        errorMsgOnSubmit: true,
         floatLabel: 'never'
     };
 

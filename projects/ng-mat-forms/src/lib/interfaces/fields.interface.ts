@@ -99,12 +99,59 @@ export interface NgMatFormFields {
      * Non-Mandatory to the Field Object
      */
     readonly disable?: boolean;
+    /**
+     * @description
+     * To Manage the change events
+     * Non-Mandatory to the Field Object
+     */
     readonly changeEvents?: Array<NgMatFormFieldChanges>;
+    /**
+     * @description
+     * To Manage the blur events
+     * Non-Mandatory to the Field Object
+     */
     readonly blurEvents?: Array<NgMatFormFieldChanges>;
+    /**
+     * @description
+     * max length the form field
+     * Non-Mandatory to the Field Object
+     */
     readonly maxLength?: string;
+    /**
+     * @description
+     * min length the form field
+     * Non-Mandatory to the Field Object
+     */
     readonly minLength?: string;
+    /**
+     * @description
+     * To determine get the select options frol url or not
+     * Non-Mandatory to the Field Object
+     */
     readonly getListFromApi?: boolean;
+    /**
+     * @description
+     * This object used to call the service and load the data to the select
+     * Non-Mandatory to the Field Object
+     */
     readonly api?: NgMatSelectListFromUrl;
+    /**
+     * @description
+     * This load depenent select with this field change
+     * Non-Mandatory to the Field Object
+     */
+    loadDepenentSelectOnChange?: {
+        formControlName: string;
+        api: NgMatSelectListFromUrl;
+    }
+    /**
+     * @description
+     * Contains the error messages of the field.
+     * Non-Mandatory to the Field Object
+     */
+    errorMessage?: {
+        [key: string]: string;
+    }
 }
 
 

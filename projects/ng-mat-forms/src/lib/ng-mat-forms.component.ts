@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, AbstractControl } from '@angular/forms';
+import { FormControl, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { NgMatFormsService } from './ng-mat-forms.service';
 import {
     FieldValidatorModel,
@@ -90,6 +90,7 @@ export class NgMatFormsComponent implements OnInit {
             event: eventChange
         };
         this.onFieldChangeOperations(emitObj);
+        this.loadDepenentSelectOnChange(emitObj);
         this.formFieldsChange.emit(emitObj);
     }
 
@@ -114,15 +115,25 @@ export class NgMatFormsComponent implements OnInit {
         return field.formControlName;
     }
 
-    getErrorMessage(control: AbstractControl, fieldName: string): string {
-        control.errors.forEach((error) => {
-            return {
-                required: `${fieldName} is required`,
-                minlength: `Minimun Length for ${fieldName} is ${control.errors[error].requiredLength}`,
-                maxlength: `Maximum Length for ${fieldName} is ${control.errors[error].requiredLength}`,
-                email: `Enter valid email for ${fieldName}`
-            }[error];
-        });
+    getErrorMessage(field: NgMatFormFields, control: AbstractControl, fieldName: string): string {
+        if (field.hasOwnProperty('errorMessage')) {
+            for (let error in control.errors) {
+                if (control.errors.hasOwnProperty(error)) {
+                    return field.errorMessage[error];
+                }
+            }
+        } else {
+            for (let error in control.errors) {
+                if (control.errors.hasOwnProperty(error)) {
+                    return {
+                        required: `${fieldName} is required`,
+                        minlength: `Minimun Length for ${fieldName} is ${control.errors[error].requiredLength}`,
+                        maxlength: `Maximum Length for ${fieldName} is ${control.errors[error].requiredLength}`,
+                        email: `Enter valid email for ${fieldName}`
+                    }[error];
+                }
+            }
+        }
         return;
     }
 
@@ -199,6 +210,26 @@ export class NgMatFormsComponent implements OnInit {
                         console.log(error);
                     });
                 }
+            }
+        });
+    }
+
+    loadDepenentSelectOnChange(event: NgMatFormFieldChangeModal) {
+        this.Fields.forEach((field: NgMatFormFields, i) => {
+            if (field.formControlName == event.controlName && field.hasOwnProperty('loadDepenentSelectOnChange')) {
+                let index;
+                this.Fields.forEach((x: NgMatFormFields, j) => {
+                    if (x.formControlName == field.loadDepenentSelectOnChange.formControlName) {
+                        index = j;
+                    }
+                });
+                this.formService.getData(field.loadDepenentSelectOnChange.api).subscribe((response: any) => {
+                    response.data.forEach((data: SelectList) => {
+                        this.Fields[index].list.push(data);
+                    });
+                }, error => {
+                    console.log(error);
+                });
             }
         });
     }
