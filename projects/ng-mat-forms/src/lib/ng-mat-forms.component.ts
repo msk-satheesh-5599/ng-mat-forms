@@ -117,13 +117,13 @@ export class NgMatFormsComponent implements OnInit {
 
     getErrorMessage(field: NgMatFormFields, control: AbstractControl, fieldName: string): string {
         if (field.hasOwnProperty('errorMessage')) {
-            for (let error in control.errors) {
+            for (const error in control.errors) {
                 if (control.errors.hasOwnProperty(error)) {
                     return field.errorMessage[error];
                 }
             }
         } else {
-            for (let error in control.errors) {
+            for (const error in control.errors) {
                 if (control.errors.hasOwnProperty(error)) {
                     return {
                         required: `${fieldName} is required`,
@@ -216,10 +216,10 @@ export class NgMatFormsComponent implements OnInit {
 
     loadDepenentSelectOnChange(event: NgMatFormFieldChangeModal) {
         this.Fields.forEach((field: NgMatFormFields, i) => {
-            if (field.formControlName == event.controlName && field.hasOwnProperty('loadDepenentSelectOnChange')) {
+            if (field.formControlName === event.controlName && field.hasOwnProperty('loadDepenentSelectOnChange')) {
                 let index;
                 this.Fields.forEach((x: NgMatFormFields, j) => {
-                    if (x.formControlName == field.loadDepenentSelectOnChange.formControlName) {
+                    if (x.formControlName === field.loadDepenentSelectOnChange.formControlName) {
                         index = j;
                     }
                 });

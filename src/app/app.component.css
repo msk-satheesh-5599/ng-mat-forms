@@ -1,4 +1,4 @@
-/* .main {
+.main {
     width: 100%;
     background: #56ccf2;  
     background: -webkit-linear-gradient(to bottom,rgba(106, 200, 212, 0.7),
@@ -70,4 +70,4 @@
     flex-direction: column;
     background: rgba(154, 179, 216, 0.4);
     align-items: flex-end;
-} */
+}

@@ -47,7 +47,7 @@ export class AppComponent implements AfterViewInit {
                 header: new HttpHeaders().set('Access-Control-Allow-Origin', '*'),
                 url: `https://my-json-server.typicode.com/msk-satheesh-5599/Portfolio/data`,
                 method: 'get',
-                params: { value: "msk" }
+                params: { value: 'msk' }
             },
         }
     }, {

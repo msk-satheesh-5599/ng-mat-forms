@@ -143,7 +143,7 @@ export interface NgMatFormFields {
     loadDepenentSelectOnChange?: {
         formControlName: string;
         api: NgMatSelectListFromUrl;
-    }
+    };
     /**
      * @description
      * Contains the error messages of the field.
@@ -151,7 +151,7 @@ export interface NgMatFormFields {
      */
     errorMessage?: {
         [key: string]: string;
-    }
+    };
 }
 
 
