@@ -2,15 +2,20 @@
     width: 100%;
     background: #56ccf2;  
     background: -webkit-linear-gradient(to bottom,rgba(106, 200, 212, 0.7),
-    rgba(0, 211, 255, 0.7), rgba(125, 125, 245, 0.7)), url("../assets/pro-bg.jpg");
+    rgba(0, 211, 255, 0.7), rgba(125, 125, 245, 0.7)), url("../assets/pro-bg.jpg") no-repeat;
     background: linear-gradient(to bottom,rgba(106, 200, 212, 0.7),
-    rgba(0, 211, 255, 0.7), rgba(125, 125, 245, 0.7)), url("../assets/pro-bg.jpg"); 
+    rgba(0, 211, 255, 0.7), rgba(125, 125, 245, 0.7)), url("../assets/pro-bg.jpg") no-repeat; 
 }
 
 .flex-column{
     display: flex;
     height: 100vh;
     flex-direction: column;   
+}
+
+.image-icon{
+    background-image: url("../assets/ng-mat.png");
+    background-size: contain;
 }
 
 .image-logo{
