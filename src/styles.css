@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css?family=Exo&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Ruda&display=swap');
+@font-face {
+    font-family: 'Ruda';
+    src: url(/assets/fonts/Ruda-Regular.ttf);
+}
 
 *, body, html {
     padding: 0px;
