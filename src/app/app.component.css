@@ -2,9 +2,11 @@
     width: 100%;
     background: #56ccf2;  
     background: -webkit-linear-gradient(to bottom,rgba(106, 200, 212, 0.7),
-    rgba(0, 211, 255, 0.7), rgba(125, 125, 245, 0.7)), url("../assets/pro-bg.jpg") no-repeat;
+    rgba(0, 211, 255, 0.7), rgba(125, 125, 245, 0.7)), url("../assets/pro-bg.jpg") no-repeat fixed;
     background: linear-gradient(to bottom,rgba(106, 200, 212, 0.7),
-    rgba(0, 211, 255, 0.7), rgba(125, 125, 245, 0.7)), url("../assets/pro-bg.jpg") no-repeat fixed center; 
+    rgba(0, 211, 255, 0.7), rgba(125, 125, 245, 0.7)), url("../assets/pro-bg.jpg") no-repeat fixed;
+    background-size: 100% 100%;
+    background-position: center center;
 }
 
 .flex-column{
@@ -82,5 +84,6 @@
     background: rgba(24, 150, 167, 0.21);
     align-items: center;
     font-family: 'Ruda',monospace;
+    font-size: 100%;
     padding: 5px;
 }
