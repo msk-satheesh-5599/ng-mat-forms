@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @font-face {
     font-family: 'Ruda';
-    src: url(/assets/fonts/Ruda-Regular.ttf);
+    src: url("assets/fonts/Ruda-Regular.ttf");
 }
 
 *, body, html {
