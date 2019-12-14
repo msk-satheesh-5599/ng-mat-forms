@@ -30,5 +30,3 @@ deploy:
   keep-history: true
   local-dir: ./dist/forms/
   on:
-     branch: gh-pages
-    
