@@ -9,8 +9,9 @@
                         <mat-label *ngIf='x.hasOwnProperty("labelShow") ? x.labelShow : true'>{{ x.label }}</mat-label>
                         <input matInput [placeholder]="x.placeholder" [formControlName]='x.formControlName'
                             (change)='valueChange(x.formControlName, $event)' [errorStateMatcher]="matcher"
-                            [libNumbersOnly]='x.directive == "numeric"' [libAlphabetOnly]='x.directive == "alpha"'
-                            [libAlphanumericOnly]='x.directive == "alphanumeric"'
+                            [libNumbersOnly]='x.directive == "numericOnly"' 
+                            [libAlphabetOnly]='x.directive == "alphabetOnly"'
+                            [libAlphanumericOnly]='x.directive == "alphanumericOnly"'
                             [libCustomRegex]='x.directive == "custom"'
                             [libDisableField]='x.hasOwnProperty("disable") ? x.disable : false'
                             [regExp]='x.hasOwnProperty("reGex") ? x.reGex : ""'
@@ -85,6 +86,10 @@
                             [placeholder]="x.placeholder" [formControlName]='x.formControlName'
                             [errorStateMatcher]="matcher" [maxlength]='x.hasOwnProperty("maxLength") ? x.maxLength : ""'
                             [minlength]='x.hasOwnProperty("minLength") ? x.minLength : ""'
+                            [libNumbersOnly]='x.directive == "numericOnly"' 
+                            [libAlphabetOnly]='x.directive == "alphabetOnly"'
+                            [libAlphanumericOnly]='x.directive == "alphanumericOnly"'
+                            [libCustomRegex]='x.directive == "custom"'
                             (change)='valueChange(x.formControlName, $event)'
                             (blur)='blurChange(x.formControlName, $event)'>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -102,6 +107,10 @@
                             [formControl]="x.formControlName"
                             [maxlength]='x.hasOwnProperty("maxLength") ? x.maxLength : ""'
                             [minlength]='x.hasOwnProperty("minLength") ? x.minLength : ""'
+                            [libNumbersOnly]='x.directive == "numericOnly"' 
+                            [libAlphabetOnly]='x.directive == "alphabetOnly"'
+                            [libAlphanumericOnly]='x.directive == "alphanumericOnly"'
+                            [libCustomRegex]='x.directive == "custom"'
                             (change)='valueChange(x.formControlName, $event)'
                             (blur)='blurChange(x.formControlName, $event)'>
                         <mat-autocomplete #auto="matAutocomplete">

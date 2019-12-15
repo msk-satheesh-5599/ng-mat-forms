@@ -20,9 +20,8 @@ export class AppComponent implements AfterViewInit {
         label: 'User Name',
         placeholder: 'Enter a User Name',
         formControlName: 'name',
-        directive: 'alphabetOnly',
+        directive: 'numericOnly',
         maxLength: '10',
-        disable: true,
         validators: [Validators.required, Validators.email]
     }, {
         type: 'select',
@@ -98,6 +97,7 @@ export class AppComponent implements AfterViewInit {
         label: 'Date of Birth',
         placeholder: 'Choose a date of birth',
         formControlName: 'dob',
+        directive: 'numericOnly',
         validators: [Validators.required],
         minDate: new Date('2019-01-01')
     }];
