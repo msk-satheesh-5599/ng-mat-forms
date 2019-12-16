@@ -143,6 +143,14 @@ Note: `*mandatory`
 |minDate| no default value | Date | for disable the datepicker since the date|
 | maxDate | no default value | Date | for disable the datepicker untill the date|
 |disable| false | boolean | for disable the field | 
+|changeEvents| no default value | Array<NgMatFormFieldChanges> | for do operations like disable another field, enable another field,set value to another field, set validators to another field, remove validators of the field on field change event |
+|blurEvents| no default value | Array<NgMatFormFieldChanges> | for do operations like disable another field, enable another field,set value to another field, set validators to another field, remove validators of the field on field blur event |  
+|maxLength| no default value | string | for max length of the field | 
+|minLength| no default value | string | for min length of the field | 
+|getListFromApi| no default value | boolean | if it is true the select will loaded with the help of the api propery |
+|api| no default value | NgMatSelectListFromUrl | This property helps to get the list of options for the select field from the http. This property only acceptable when the getListFromApi flag it true. |  
+|loadDepenentSelectOnChange| no default value | Object | This property is helps to load the dependent select field on the change of the field. |  
+|errorMessage| no default value | Object | This property is helps to show the error message of the form field.it needs to be contains the property of the validator as key and errormessage as value. |  
 
 ### formChange callback
 
